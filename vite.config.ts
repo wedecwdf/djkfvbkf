@@ -4,8 +4,7 @@ import { defineConfig } from "vite"
 import { inspectAttr } from 'kimi-plugin-inspect-react'
 
 // https://vite.dev/config/
-export default defineConfig({ base: "/djkfvbkf/",
-  base: './',
+export default defineConfig({ base: "/djkfvbkf/", base: './',
   plugins: [inspectAttr(), react()],
   resolve: {
     alias: {
@@ -13,3 +12,4 @@ export default defineConfig({ base: "/djkfvbkf/",
     },
   },
 });
+
