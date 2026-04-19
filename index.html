@@ -9,5 +9,10 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <script>
+  window.onerror = function(msg, url, line, col, error) {
+    document.body.innerHTML = '<pre style="color:red;padding:20px;">JS Error: ' + msg + '<br>at ' + url + ':' + line + ':' + col + '</pre>';
+  };
+</script></body>
 </html>
+

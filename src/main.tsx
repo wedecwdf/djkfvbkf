@@ -1,13 +1,20 @@
-﻿import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import { AuthProvider } from './contexts/AuthContext';
-import './index.css';
+﻿import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-  </React.StrictMode>
-);
+// 移动端 ResizeObserver 循环错误抑制
+const resizeObserverErr = () => {
+  const e = window.onerror
+  window.onerror = function(msg) {
+    if (msg.includes('ResizeObserver')) return
+    return e && e.apply(this, arguments)
+  }
+}
+resizeObserverErr()
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
