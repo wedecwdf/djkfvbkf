@@ -147,3 +147,5 @@
 .animate-pulse-red {
   animation: pulse-red 2s infinite;
 }
+
+html, body, #root { height: 100%; }
