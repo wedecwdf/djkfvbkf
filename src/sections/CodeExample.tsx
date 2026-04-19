@@ -1,6 +1,4 @@
-﻿import { Card } from '@/components/ui/card'
-
-export default function CodeExample() {
+﻿export default function CodeExample() {
   return (
     <section id="examples" className="py-16 px-6 max-w-7xl mx-auto">
       <div className="grid md:grid-cols-2 gap-10 items-center">
