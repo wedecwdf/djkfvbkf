@@ -1,33 +1,49 @@
-﻿import Navbar from './sections/Navbar'
-import Hero from './sections/Hero'
-import Services from './sections/Services'
-import Workflow from './sections/Workflow'
-import CodeExample from './sections/CodeExample'
-import ContactCTA from './sections/ContactCTA'
-import Footer from './sections/Footer'
-import Profile from './sections/Profile'
+﻿import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./sections/Navbar";
+import Hero from "./sections/Hero";
+import Services from "./sections/Services";
+import Workflow from "./sections/Workflow";
+import CodeExample from "./sections/CodeExample";
+import ContactCTA from "./sections/ContactCTA";
+import Footer from "./sections/Footer";
+import Profile from "./sections/Profile";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 
-function App() {
-  const path = window.location.pathname;
-  const isProfilePage = path === '/profile';
-
+function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
+    <>
       <Navbar />
-      {isProfilePage ? (
-        <Profile />
-      ) : (
-        <>
-          <Hero />
-          <Services />
-          <Workflow />
-          <CodeExample />
-          <ContactCTA />
-        </>
-      )}
+      <Hero />
+      <Services />
+      <Workflow />
+      <CodeExample />
+      <ContactCTA />
       <Footer />
-    </div>
-  )
+    </>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/profile" element={<><Navbar /><Profile /><Footer /></>} />
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboard />
+            </ProtectedAdminRoute>
+          }
+        />
+        <Route path="*" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
