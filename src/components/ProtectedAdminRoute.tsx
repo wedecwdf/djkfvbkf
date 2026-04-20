@@ -19,7 +19,7 @@ export default function ProtectedAdminRoute({ children }: { children: React.Reac
       .select("is_admin")
       .eq("id", user.id)
       .single()
-      .then(({ data, error }) => {
+      .then(({ data }) => {
         setIsAdmin(data?.is_admin || false);
         setChecking(false);
       });
@@ -51,3 +51,4 @@ export default function ProtectedAdminRoute({ children }: { children: React.Reac
 
   return <>{children}</>;
 }
+
