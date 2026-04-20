@@ -1,13 +1,32 @@
 <!doctype html>
-<html lang="en">
-  <head>
+<html lang="zh-CN">
+  <head><script>
+  window.__mobileErrors = [];
+  window.addEventListener('error', function(e) {
+    var msg = e.message + ' @ ' + e.filename + ':' + e.lineno + ':' + e.colno;
+    window.__mobileErrors.push(msg);
+    document.body.innerHTML = '<pre style="color:red;padding:20px;background:white;">' + window.__mobileErrors.join('<br>') + '</pre>';
+  }, true);
+  window.addEventListener('unhandledrejection', function(e) {
+    var msg = 'Unhandled Rejection: ' + e.reason;
+    window.__mobileErrors.push(msg);
+    document.body.innerHTML = '<pre style="color:red;padding:20px;background:white;">' + window.__mobileErrors.join('<br>') + '</pre>';
+  });
+</script>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>A股投资博客</title>
-    <script type="module" crossorigin src="./assets/index-B2xEWZma.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BMWRPhsa.css">
+    <title>策略代码工坊</title>
+    <script type="module" crossorigin src="/assets/index-BUDmNyGf.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-D_GBTPph.css">
   </head>
   <body>
     <div id="root"></div>
-  </body>
+  <script>
+  window.onerror = function(msg, url, line, col, error) {
+    document.body.innerHTML = '<pre style="color:red;padding:20px;">JS Error: ' + msg + '<br>at ' + url + ':' + line + ':' + col + '</pre>';
+  };
+</script></body>
 </html>
+
+
