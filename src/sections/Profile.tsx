@@ -11,6 +11,14 @@ interface StrategyOrder {
   created_at: string;
   delivered_at?: string;
   progress?: number;
+  file_url?: string;
+}
+
+interface FreeResource {
+  id: string;
+  title: string;
+  description: string;
+  file_url: string;
 }
 
 export default function Profile() {
@@ -20,6 +28,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [orders, setOrders] = useState<StrategyOrder[]>([]);
+  const [resources, setResources] = useState<FreeResource[]>([]);
   const [stats, setStats] = useState({ total: 0, completed: 0 });
   const [showWechatModal, setShowWechatModal] = useState(false);
 
@@ -27,6 +36,7 @@ export default function Profile() {
     if (user) {
       fetchProfile();
       fetchOrders();
+      fetchResources();
     }
   }, [user]);
 
@@ -59,6 +69,11 @@ export default function Profile() {
       setOrders([]);
       setStats({ total: 0, completed: 0 });
     }
+  };
+
+  const fetchResources = async () => {
+    const { data } = await supabase.from("free_resources").select("*").order("created_at", { ascending: false });
+    if (data) setResources(data);
   };
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
@@ -289,9 +304,18 @@ export default function Profile() {
                     )}
                     {order.status === "completed" && (
                       <div className="flex flex-wrap gap-3">
-                        <button className="bg-red-50 hover:bg-red-100 text-red-700 px-4 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1">
-                          <i className="fas fa-download text-xs"></i> 下载代码
-                        </button>
+                        {order.file_url ? (
+                          <a
+                            href={order.file_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-red-50 hover:bg-red-100 text-red-700 px-4 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1"
+                          >
+                            <i className="fas fa-download text-xs"></i> 下载代码
+                          </a>
+                        ) : (
+                          <span className="text-gray-400 text-sm">等待上传</span>
+                        )}
                         <button className="text-gray-600 hover:text-gray-800 text-sm font-medium flex items-center gap-1">
                           <i className="far fa-comment-dots"></i> 反馈
                         </button>
@@ -301,6 +325,41 @@ export default function Profile() {
                 ))
               )}
             </div>
+          </div>
+
+          {/* 免费资源板块 */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <i className="fas fa-gift text-red-600"></i>
+              <h2 className="text-lg font-bold text-gray-800">免费策略资源</h2>
+            </div>
+            <div className="space-y-3">
+              {resources.length === 0 ? (
+                <p className="text-gray-500 text-sm text-center py-4">暂无免费资源，敬请期待</p>
+              ) : (
+                resources.slice(0, 3).map((r) => (
+                  <div key={r.id} className="flex items-center justify-between border-b border-gray-100 pb-3 last:border-0">
+                    <div>
+                      <p className="font-medium text-gray-800">{r.title}</p>
+                      <p className="text-xs text-gray-500">{r.description || "点击下载"}</p>
+                    </div>
+                    <a
+                      href={r.file_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-red-600 hover:text-red-700 text-sm font-medium"
+                    >
+                      下载 <i className="fas fa-download ml-1 text-xs"></i>
+                    </a>
+                  </div>
+                ))
+              )}
+            </div>
+            {resources.length > 3 && (
+              <a href="#" className="mt-4 text-sm text-red-600 font-medium hover:underline flex items-center gap-1">
+                查看更多资源 <i className="fas fa-arrow-right text-xs"></i>
+              </a>
+            )}
           </div>
         </div>
 
@@ -380,9 +439,13 @@ export default function Profile() {
                     <p className="text-sm font-medium text-gray-800">{order.title}.{order.language === "Python" ? "py" : "js"}</p>
                     <p className="text-xs text-gray-400">交付于 {order.delivered_at?.slice(0, 10)}</p>
                   </div>
-                  <button className="text-gray-400 hover:text-red-600">
-                    <i className="fas fa-download"></i>
-                  </button>
+                  {order.file_url ? (
+                    <a href={order.file_url} target="_blank" className="text-gray-400 hover:text-red-600">
+                      <i className="fas fa-download"></i>
+                    </a>
+                  ) : (
+                    <span className="text-gray-300"><i className="fas fa-download"></i></span>
+                  )}
                 </div>
               ))}
               {orders.filter(o => o.status === "completed").length === 0 && (
@@ -394,7 +457,7 @@ export default function Profile() {
             </a>
           </div>
 
-          {/* 帮助卡片 - 微信二维码弹窗 */}
+          {/* 帮助卡片 */}
           <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-5 text-white">
             <i className="fas fa-headset text-2xl mb-3"></i>
             <h4 className="font-bold mb-1">需要帮助？</h4>
