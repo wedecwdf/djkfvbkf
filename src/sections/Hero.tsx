@@ -1,7 +1,7 @@
-﻿import { useEffect, useState } from "react";
+﻿import { useState } from "react";
 
 const Hero = () => {
-  const [stats, setStats] = useState({ total: 128, monthly: 12 });
+  const [stats] = useState({ total: 128, monthly: 12 });
 
   return (
     <section id="hero" className="pt-36 pb-16 px-6 max-w-7xl mx-auto">
@@ -100,3 +100,5 @@ const Hero = () => {
 };
 
 export default Hero;
+
+
