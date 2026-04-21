@@ -1,10 +1,11 @@
 ﻿import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
@@ -14,6 +15,20 @@ const Navbar = () => {
   const [error, setError] = useState("");
 
   const { signUp, signIn } = useAuth();
+
+  // 处理导航：如果在首页则滚动，否则跳转首页后再滚动
+  const handleNavClick = (sectionId: string) => {
+    if (location.pathname === "/") {
+      // 已在首页，直接滚动
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // 不在首页，跳转首页并携带要滚动到的区块
+      navigate(`/?scrollTo=${sectionId}`);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,11 +69,11 @@ const Navbar = () => {
             </span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <a href="#hero" className="text-gray-700 hover:text-red-600">首页</a>
-            <a href="#services" className="text-gray-700 hover:text-red-600">服务</a>
-            <a href="#workflow" className="text-gray-700 hover:text-red-600">流程</a>
-            <a href="#examples" className="text-gray-700 hover:text-red-600">示例</a>
-            <a href="#contact" className="text-gray-700 hover:text-red-600">联系</a>
+            <button onClick={() => handleNavClick("hero")} className="text-gray-700 hover:text-red-600 transition">首页</button>
+            <button onClick={() => handleNavClick("services")} className="text-gray-700 hover:text-red-600 transition">服务</button>
+            <button onClick={() => handleNavClick("workflow")} className="text-gray-700 hover:text-red-600 transition">流程</button>
+            <button onClick={() => handleNavClick("examples")} className="text-gray-700 hover:text-red-600 transition">示例</button>
+            <button onClick={() => handleNavClick("contact")} className="text-gray-700 hover:text-red-600 transition">联系</button>
           </div>
           <div className="flex gap-2 items-center">
             {user ? (
