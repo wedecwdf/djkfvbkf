@@ -371,23 +371,9 @@ pause
                     </div>
                     <div className="flex items-center gap-2">
                       {/* 下载按钮 */}
-                      <a
-                        href={r.file_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-red-600 hover:text-red-700 text-sm font-medium bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition"
-                        title="下载源代码"
-                      >
-                        <i className="fas fa-download"></i>
-                      </a>
+                      <a href={r.file_url} target="_blank" rel="noopener noreferrer" className="text-white bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded-lg text-xs font-medium transition shadow-sm" title="下载源代码">下载</a>
                       {/* 运行按钮 - 下载批处理脚本 */}
-                      <button
-                        onClick={() => downloadRunScript(r)}
-                        className="text-green-600 hover:text-green-700 text-sm font-medium bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition"
-                        title="下载运行脚本 (.bat)，双击即可运行 (需安装Python)"
-                      >
-                        <i className="fas fa-play"></i>
-                      </button>
+                      <button onClick={() => downloadRunScript(r)} className="text-white bg-green-600 hover:bg-green-700 px-3 py-1.5 rounded-lg text-xs font-medium transition shadow-sm" title="下载运行脚本 (.bat)，双击即可运行 (需安装Python)">运行</button>
                     </div>
                   </div>
                 ))
@@ -547,3 +533,5 @@ pause
     </div>
   );
 }
+
+
