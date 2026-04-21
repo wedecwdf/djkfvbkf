@@ -122,6 +122,30 @@ export default function Profile() {
     }
   };
 
+  // 生成并下载运行脚本 (.bat)
+  const downloadRunScript = (resource: FreeResource) => {
+    // 从 file_url 中提取文件名
+    const urlParts = resource.file_url.split('/');
+    const fileName = urlParts[urlParts.length - 1] || 'strategy.py';
+    const scriptContent = `@echo off
+echo 正在运行策略: ${resource.title}
+echo.
+python "${fileName}"
+echo.
+echo 程序执行完毕。
+pause
+`;
+    const blob = new Blob([scriptContent], { type: 'application/octet-stream' });
+    const blobUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = `运行_${resource.title}.bat`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(blobUrl);
+  };
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -137,7 +161,7 @@ export default function Profile() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 md:py-12 pt-28 md:pt-32">
-      {/* 欢迎头部 */}
+      {/* 欢迎头部 (保持原有) */}
       <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
@@ -162,7 +186,7 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* 快速提示卡片 */}
+      {/* 快速提示卡片 (保持原有) */}
       <div className="bg-gradient-to-r from-red-50 to-amber-50 border border-red-200 rounded-2xl p-5 mb-8 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shadow-md">
@@ -180,6 +204,7 @@ export default function Profile() {
 
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
+          {/* 快速提交策略需求 (保持原有) */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-4">
               <i className="fas fa-pen-fancy text-red-600"></i>
@@ -248,6 +273,7 @@ export default function Profile() {
             </form>
           </div>
 
+          {/* 我的策略订单 (保持原有) */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
@@ -327,7 +353,7 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* 免费资源板块 */}
+          {/* 免费策略资源板块 (新增运行按钮) */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-4">
               <i className="fas fa-gift text-red-600"></i>
@@ -337,32 +363,49 @@ export default function Profile() {
               {resources.length === 0 ? (
                 <p className="text-gray-500 text-sm text-center py-4">暂无免费资源，敬请期待</p>
               ) : (
-                resources.slice(0, 3).map((r) => (
+                resources.slice(0, 5).map((r) => (
                   <div key={r.id} className="flex items-center justify-between border-b border-gray-100 pb-3 last:border-0">
-                    <div>
+                    <div className="flex-1">
                       <p className="font-medium text-gray-800">{r.title}</p>
-                      <p className="text-xs text-gray-500">{r.description || "点击下载"}</p>
+                      <p className="text-xs text-gray-500">{r.description || "点击下载或运行"}</p>
                     </div>
-                    <a
-                      href={r.file_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-red-600 hover:text-red-700 text-sm font-medium"
-                    >
-                      下载 <i className="fas fa-download ml-1 text-xs"></i>
-                    </a>
+                    <div className="flex items-center gap-2">
+                      {/* 下载按钮 */}
+                      <a
+                        href={r.file_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-600 hover:text-red-700 text-sm font-medium bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition"
+                        title="下载源代码"
+                      >
+                        <i className="fas fa-download"></i>
+                      </a>
+                      {/* 运行按钮 - 下载批处理脚本 */}
+                      <button
+                        onClick={() => downloadRunScript(r)}
+                        className="text-green-600 hover:text-green-700 text-sm font-medium bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition"
+                        title="下载运行脚本 (.bat)，双击即可运行 (需安装Python)"
+                      >
+                        <i className="fas fa-play"></i>
+                      </button>
+                    </div>
                   </div>
                 ))
               )}
             </div>
-            {resources.length > 3 && (
+            {resources.length > 5 && (
               <a href="#" className="mt-4 text-sm text-red-600 font-medium hover:underline flex items-center gap-1">
                 查看更多资源 <i className="fas fa-arrow-right text-xs"></i>
               </a>
             )}
+            <p className="text-xs text-gray-400 mt-4 flex items-center gap-1">
+              <i className="fas fa-info-circle"></i> 
+              点击 <i className="fas fa-play text-green-600"></i> 将下载 .bat 脚本，双击即可自动运行对应 Python 代码（需安装 Python）。
+            </p>
           </div>
         </div>
 
+        {/* 右侧边栏 (保持原有) */}
         <div className="space-y-6">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 text-center">
             <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-full mx-auto flex items-center justify-center shadow-md mb-3">
@@ -457,7 +500,7 @@ export default function Profile() {
             </a>
           </div>
 
-          {/* 帮助卡片 */}
+          {/* 帮助卡片 (保持原有) */}
           <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-5 text-white">
             <i className="fas fa-headset text-2xl mb-3"></i>
             <h4 className="font-bold mb-1">需要帮助？</h4>
