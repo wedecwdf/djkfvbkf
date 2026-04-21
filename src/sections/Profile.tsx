@@ -2,12 +2,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
-interface ProfileData {
-  username: string | null;
-  full_name: string | null;
-  avatar_url?: string | null;
-}
-
 interface StrategyOrder {
   id: string;
   title: string;
@@ -419,3 +413,4 @@ export default function Profile() {
     </div>
   );
 }
+
