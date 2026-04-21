@@ -6,16 +6,15 @@ interface StrategyOrder {
   id: string;
   title: string;
   description: string;
-  status: "pending" | "in_progress" | "completed";
-  progress?: number;
+  status: string;
   language: string;
   created_at: string;
   delivered_at?: string;
-  file_url?: string;
+  progress?: number;
 }
 
 export default function Profile() {
-  const { user, signOut } = useAuth();
+  const { user, signOut, loading: authLoading } = useAuth();
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,7 +42,6 @@ export default function Profile() {
   };
 
   const fetchOrders = async () => {
-    // 注意：这里假设你创建了 strategy_orders 表，如果没有，可以先使用模拟数据或注释掉
     const { data, error } = await supabase
       .from("strategy_orders")
       .select("*")
@@ -57,7 +55,6 @@ export default function Profile() {
         completed: data.filter((o: StrategyOrder) => o.status === "completed").length,
       });
     } else {
-      // 如果没有表，使用空数据避免报错
       setOrders([]);
       setStats({ total: 0, completed: 0 });
     }
@@ -109,12 +106,18 @@ export default function Profile() {
     }
   };
 
-  if (!user) { window.location.href = '/'; return null; //
+  // 关键修复：等待 authLoading 结束，若仍无用户则重定向
+  if (authLoading) {
     return (
-      <div className="pt-28 text-center">
-        <p className="text-gray-500">请先登录</p>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-gray-500">加载中...</div>
       </div>
     );
+  }
+
+  if (!user) {
+    window.location.href = "/";
+    return null;
   }
 
   return (
@@ -136,7 +139,7 @@ export default function Profile() {
             <i className="far fa-user-circle mr-2"></i>账号设置
           </button>
           <button
-            onClick={signOut}
+            onClick={async () => { await signOut(); window.location.href = "/"; }}
             className="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-xl text-sm font-medium shadow-md shadow-red-200 transition"
           >
             <i className="fas fa-sign-out-alt mr-2"></i>退出登录
@@ -144,7 +147,7 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* 快速提示卡片 */}
+      {/* 其余部分保持不变（快速提示、表单、订单列表等） */}
       <div className="bg-gradient-to-r from-red-50 to-amber-50 border border-red-200 rounded-2xl p-5 mb-8 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shadow-md">
@@ -160,11 +163,8 @@ export default function Profile() {
         </a>
       </div>
 
-      {/* 主要内容区域：两列布局 */}
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* 左侧：新建策略表单 + 进行中的订单 */}
         <div className="lg:col-span-2 space-y-6">
-          {/* 快速新建策略卡片 */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-4">
               <i className="fas fa-pen-fancy text-red-600"></i>
@@ -233,7 +233,6 @@ export default function Profile() {
             </form>
           </div>
 
-          {/* 我的策略订单列表 */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
@@ -305,9 +304,7 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* 右侧：个人信息卡片 + 交付文件/通知 */}
         <div className="space-y-6">
-          {/* 用户资料卡片 */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 text-center">
             <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-full mx-auto flex items-center justify-center shadow-md mb-3">
               <span className="text-white text-2xl font-bold">
@@ -336,7 +333,6 @@ export default function Profile() {
             >
               编辑个人资料
             </button>
-            {/* 编辑资料表单（默认隐藏） */}
             <div id="profile-edit-form" className="hidden mt-4 text-left border-t pt-4">
               <form onSubmit={handleUpdateProfile} className="space-y-3">
                 <div>
@@ -369,7 +365,6 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* 最新交付文件 */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5">
             <div className="flex items-center gap-2 mb-4">
               <i className="fas fa-box-open text-red-600"></i>
@@ -399,7 +394,6 @@ export default function Profile() {
             </a>
           </div>
 
-          {/* 帮助中心 */}
           <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-5 text-white">
             <i className="fas fa-headset text-2xl mb-3"></i>
             <h4 className="font-bold mb-1">需要帮助？</h4>
@@ -413,6 +407,3 @@ export default function Profile() {
     </div>
   );
 }
-
-
-

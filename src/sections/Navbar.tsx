@@ -1,4 +1,5 @@
-﻿import { useState } from "react";
+﻿import { useState } from
+import { useNavigate } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
@@ -35,7 +36,7 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    await signOut(); window.location.href = '/';
+    await signOut(); navigate('/');
   };
 
   return (
@@ -159,4 +160,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
 
