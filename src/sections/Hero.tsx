@@ -22,9 +22,9 @@ const Hero = () => {
             变为<span className="bg-gradient-to-r from-red-600 to-amber-600 bg-clip-text text-transparent">可执行代码</span>
           </h1>
           <p className="text-lg text-gray-600 mb-8 max-w-lg">
-            专业量化策略实现 · 支持 Python/JavaScript/MQL · 兼容 Backtrader/Zipline/MT5
+            ✨ 策略代码编写 <span className="text-red-600 font-bold">完全免费</span> · 仅部署与后续维护收费
             <br />
-            <span className="font-semibold text-gray-800">注释清晰，交付即用，免费修改</span>
+            <span className="font-semibold text-gray-800">支持 Python/JavaScript/MQL · 兼容主流回测框架</span>
           </p>
           <div className="flex flex-wrap gap-4">
             <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold shadow-xl shadow-red-200 transition flex items-center gap-2 text-base">
@@ -71,13 +71,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      
-      </section>
+    </section>
   );
 };
 
 export default Hero;
-
-
-
-
