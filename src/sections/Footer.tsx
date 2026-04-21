@@ -2,9 +2,8 @@
   return (
     <footer className="w-full bg-gray-900 text-gray-300 pt-12 pb-6 px-6">
       <div className="max-w-7xl mx-auto">
-        {/* 上部分：多列信息 */}
+        {/* 上部分：多列信息（保持不变） */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-gray-700">
-          {/* 品牌区 */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
@@ -23,8 +22,6 @@
               <a href="#" className="text-gray-400 hover:text-white transition"><i className="fab fa-weixin text-lg"></i></a>
             </div>
           </div>
-
-          {/* 快速链接 */}
           <div>
             <h3 className="text-white font-semibold mb-3 text-sm uppercase tracking-wider">快速导航</h3>
             <ul className="space-y-2 text-sm">
@@ -34,8 +31,6 @@
               <li><a href="#contact" className="hover:text-white transition">联系我们</a></li>
             </ul>
           </div>
-
-          {/* 联系方式 */}
           <div>
             <h3 className="text-white font-semibold mb-3 text-sm uppercase tracking-wider">联系方式</h3>
             <ul className="space-y-2 text-sm">
@@ -55,7 +50,7 @@
           </div>
         </div>
 
-        {/* 下部分：版权与声明 */}
+        {/* 下部分：版权与声明 + 管理员入口 */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-6 text-xs text-gray-500">
           <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center md:justify-start">
             <span>© 2024 策略代码工坊</span>
@@ -65,6 +60,8 @@
             <a href="#" className="hover:text-gray-300 transition">使用协议</a>
             <span className="hidden md:inline">|</span>
             <span>不提供投资建议</span>
+            <span className="hidden md:inline">|</span>
+            <a href="/admin" className="text-gray-500 hover:text-gray-300 transition" title="管理员登录">管理员</a>
           </div>
           <div className="mt-3 md:mt-0">
             <span>Made with <i className="fas fa-heart text-red-500 text-[10px]"></i> by 策略代码工坊</span>
