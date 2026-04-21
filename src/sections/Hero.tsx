@@ -115,7 +115,7 @@ const Hero = () => {
             </button>
           </div>
           <div className="flex items-center gap-6 mt-8 text-sm text-gray-500">
-            <div className="flex items-center gap-1"><i className="fas fa-shield-alt text-green-600"></i> 保密协议</div>
+            <div className="flex items-center gap-1"><i className="fas fa-shield-alt text-red-600"></i> 保密协议</div>
             <div className="flex items-center gap-1"><i className="fas fa-sync-alt text-blue-600"></i> 7天免费修改</div>
             <div className="flex items-center gap-1"><i className="fas fa-clock text-orange-500"></i> 24h交付(加急)</div>
           </div>
@@ -148,7 +148,7 @@ const Hero = () => {
                       {strategies[currentSlide].language}
                     </span>
                   </div>
-                  <span className="text-green-600 font-bold text-lg">
+                  <span className="text-red-600 font-bold text-lg">
                     {strategies[currentSlide].return} <span className="text-xs font-normal text-gray-400">年化</span>
                   </span>
                 </div>
@@ -232,3 +232,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
