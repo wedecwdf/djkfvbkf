@@ -198,7 +198,7 @@ export default function AdminDashboard() {
                             className="text-red-600 hover:text-red-800 text-xs font-medium"
                             title="删除订单"
                           >
-                            <i className="fas fa-trash-alt"></i>
+                            删除
                           </button>
                         </div>
                       </td>
@@ -213,3 +213,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+
