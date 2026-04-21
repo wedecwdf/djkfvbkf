@@ -109,7 +109,7 @@ export default function Profile() {
     }
   };
 
-  if (!user) {
+  if (!user) { window.location.href = '/'; return null; //
     return (
       <div className="pt-28 text-center">
         <p className="text-gray-500">请先登录</p>
@@ -413,5 +413,6 @@ export default function Profile() {
     </div>
   );
 }
+
 
 

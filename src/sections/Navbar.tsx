@@ -35,7 +35,7 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    await signOut();
+    await signOut(); window.location.href = '/';
   };
 
   return (
@@ -159,3 +159,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
