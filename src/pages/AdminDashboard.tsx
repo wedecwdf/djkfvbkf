@@ -35,14 +35,12 @@ export default function AdminDashboard() {
   }, []);
 
   const fetchData = async () => {
-    // 获取用户列表
     const { data: profilesData } = await supabase
       .from("profiles")
       .select("id, username, full_name, created_at")
       .order("created_at", { ascending: false });
     if (profilesData) setProfiles(profilesData);
 
-    // 获取订单列表
     const { data: ordersData } = await supabase
       .from("strategy_orders")
       .select("*")
@@ -64,6 +62,19 @@ export default function AdminDashboard() {
       .update({ status: newStatus })
       .eq("id", orderId);
     if (!error) fetchData();
+  };
+
+  const deleteOrder = async (orderId: string) => {
+    if (!window.confirm("确定要永久删除这个订单吗？此操作不可恢复。")) return;
+    const { error } = await supabase
+      .from("strategy_orders")
+      .delete()
+      .eq("id", orderId);
+    if (!error) {
+      fetchData();
+    } else {
+      alert("删除失败：" + error.message);
+    }
   };
 
   const handleLogout = async () => {
@@ -100,7 +111,6 @@ export default function AdminDashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* 统计卡片 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow p-6">
             <div className="flex items-center justify-between">
@@ -122,7 +132,6 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* 选项卡切换 */}
         <div className="bg-white rounded-xl shadow overflow-hidden">
           <div className="border-b flex">
             <button
@@ -174,15 +183,24 @@ export default function AdminDashboard() {
                       <td className="px-6 py-4">{getStatusBadge(o.status)}</td>
                       <td className="px-6 py-4 max-w-xs truncate">{o.description}</td>
                       <td className="px-6 py-4">
-                        <select
-                          value={o.status}
-                          onChange={(e) => updateOrderStatus(o.id, e.target.value)}
-                          className="border border-gray-300 rounded text-xs px-2 py-1"
-                        >
-                          <option value="pending">待处理</option>
-                          <option value="in_progress">进行中</option>
-                          <option value="completed">已完成</option>
-                        </select>
+                        <div className="flex items-center gap-2">
+                          <select
+                            value={o.status}
+                            onChange={(e) => updateOrderStatus(o.id, e.target.value)}
+                            className="border border-gray-300 rounded text-xs px-2 py-1"
+                          >
+                            <option value="pending">待处理</option>
+                            <option value="in_progress">进行中</option>
+                            <option value="completed">已完成</option>
+                          </select>
+                          <button
+                            onClick={() => deleteOrder(o.id)}
+                            className="text-red-600 hover:text-red-800 text-xs font-medium"
+                            title="删除订单"
+                          >
+                            <i className="fas fa-trash-alt"></i>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
