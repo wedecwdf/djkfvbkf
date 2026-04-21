@@ -395,15 +395,29 @@ export default function Profile() {
           </div>
 
           <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-5 text-white">
-            <i className="fas fa-headset text-2xl mb-3"></i>
-            <h4 className="font-bold mb-1">需要帮助？</h4>
-            <p className="text-gray-300 text-sm mb-4">我们的策略顾问随时为您解答。</p>
-            <button className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition w-full">
-              联系专属顾问
-            </button>
-          </div>
+  <i className="fas fa-headset text-2xl mb-3"></i>
+  <h4 className="font-bold mb-1">需要帮助？</h4>
+  <p className="text-gray-300 text-sm mb-4">我们的策略顾问随时为您解答。</p>
+  <button 
+    onClick={() => {
+      const choice = prompt('请选择联系方式：\n输入 1 联系 QQ\n输入 2 联系微信（将复制微信号）');
+      if (choice === '1') {
+        window.open('https://wpa.qq.com/msgrd?v=3&uin=1491198241&site=qq&menu=yes', '_blank');
+      } else if (choice === '2') {
+        navigator.clipboard?.writeText('15829615585');
+        alert('微信号 15829615585 已复制到剪贴板，请打开微信添加好友');
+      } else if (choice !== null) {
+        alert('无效选择');
+      }
+    }}
+    className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition w-full"
+  >
+    联系专属顾问
+  </button>
+</div>
         </div>
       </div>
     </div>
   );
 }
+
