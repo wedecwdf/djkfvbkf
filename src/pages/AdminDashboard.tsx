@@ -61,19 +61,28 @@ export default function AdminDashboard() {
       .from("strategy_orders")
       .update({ status: newStatus })
       .eq("id", orderId);
-    if (!error) fetchData();
+    if (error) {
+      alert("状态更新失败：" + error.message);
+    } else {
+      fetchData();
+    }
   };
 
   const deleteOrder = async (orderId: string) => {
     if (!window.confirm("确定要永久删除这个订单吗？此操作不可恢复。")) return;
+    
+    console.log("正在删除订单:", orderId);
     const { error } = await supabase
       .from("strategy_orders")
       .delete()
       .eq("id", orderId);
-    if (!error) {
-      fetchData();
-    } else {
+    
+    if (error) {
       alert("删除失败：" + error.message);
+      console.error("删除错误详情:", error);
+    } else {
+      alert("订单已删除");
+      fetchData();
     }
   };
 
@@ -213,4 +222,3 @@ export default function AdminDashboard() {
     </div>
   );
 }
-
