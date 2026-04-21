@@ -14,7 +14,10 @@ const Hero = () => {
       metric1: "最大回撤 12.3%",
       metric2: "夏普 1.86",
       avatars: ["张", "李", "王"],
-      viewers: 12
+      viewers: 12,
+      comment: "描述清楚后3天交付，代码注释详细，直接跑通回测！",
+      author: "张先生 · 私募研究员",
+      rating: 4.5
     },
     {
       name: "MACD金叉",
@@ -23,7 +26,10 @@ const Hero = () => {
       metric1: "胜率 62%",
       metric2: "盈亏比 2.1",
       avatars: ["陈", "赵", "周"],
-      viewers: 8
+      viewers: 8,
+      comment: "工程师很专业，帮我修正了逻辑漏洞，MT5直接加载就能用。",
+      author: "陈女士 · 独立交易员",
+      rating: 5
     },
     {
       name: "RSI背离",
@@ -32,7 +38,10 @@ const Hero = () => {
       metric1: "最大回撤 15.7%",
       metric2: "卡玛 2.6",
       avatars: ["刘", "孙", "吴"],
-      viewers: 15
+      viewers: 15,
+      comment: "沟通顺畅，JS实现复杂逻辑，还附带了详细使用说明，超值！",
+      author: "刘先生 · 币圈量化",
+      rating: 5
     }
   ];
 
@@ -47,11 +56,36 @@ const Hero = () => {
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % strategies.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + strategies.length) % strategies.length);
 
-  const avatarColors = ["bg-red-200 text-red-700", "bg-blue-200 text-blue-700", "bg-green-200 text-green-700", "bg-purple-200 text-purple-700", "bg-yellow-200 text-yellow-700", "bg-indigo-200 text-indigo-700"];
+  const avatarColors = [
+    "bg-red-200 text-red-700",
+    "bg-blue-200 text-blue-700",
+    "bg-green-200 text-green-700",
+    "bg-purple-200 text-purple-700",
+    "bg-yellow-200 text-yellow-700",
+    "bg-indigo-200 text-indigo-700"
+  ];
+
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const hasHalf = rating % 1 !== 0;
+    const stars = [];
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(<i key={`full-${i}`} className="fas fa-star"></i>);
+    }
+    if (hasHalf) {
+      stars.push(<i key="half" className="fas fa-star-half-alt"></i>);
+    }
+    const remaining = 5 - Math.ceil(rating);
+    for (let i = 0; i < remaining; i++) {
+      stars.push(<i key={`empty-${i}`} className="far fa-star"></i>);
+    }
+    return stars;
+  };
 
   return (
     <section id="hero" className="pt-36 pb-16 px-6 max-w-7xl mx-auto">
       <div className="grid lg:grid-cols-2 gap-10 items-center">
+        {/* 左侧内容不变 */}
         <div className="animate__animated animate__fadeInLeft">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-red-50 to-amber-50 rounded-full mb-6 border border-red-200">
             <span className="relative flex h-3 w-3">
@@ -86,6 +120,8 @@ const Hero = () => {
             <div className="flex items-center gap-1"><i className="fas fa-clock text-orange-500"></i> 24h交付(加急)</div>
           </div>
         </div>
+
+        {/* 右侧动态轮播卡片（新增评论） */}
         <div className="animate__animated animate__fadeInRight">
           <div 
             ref={containerRef}
@@ -103,7 +139,6 @@ const Hero = () => {
               </span>
             </div>
             
-            {/* 轮播卡片 */}
             <div className="relative">
               <div className="bg-white rounded-2xl p-5 border border-red-100 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
@@ -127,7 +162,24 @@ const Hero = () => {
                     <span>{strategies[currentSlide].metric2}</span>
                   </div>
                 </div>
-                <div className="mt-5 flex items-center justify-between">
+                
+                {/* 评论气泡 */}
+                <div className="mt-4 bg-red-50/80 rounded-2xl rounded-bl-md p-4">
+                  <div className="flex items-start gap-2">
+                    <i className="fas fa-quote-left text-red-300 text-xs mt-0.5"></i>
+                    <p className="text-sm text-gray-700 italic">“{strategies[currentSlide].comment}”</p>
+                  </div>
+                  <div className="flex items-center justify-between mt-2">
+                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                      <i className="fas fa-user-circle"></i>{strategies[currentSlide].author}
+                    </span>
+                    <span className="flex items-center text-yellow-400 text-xs">
+                      {renderStars(strategies[currentSlide].rating)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center justify-between">
                   <div className="flex -space-x-2">
                     {strategies[currentSlide].avatars.map((letter, idx) => (
                       <div 
@@ -145,7 +197,6 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* 指示点 + 控制按钮 */}
             <div className="flex items-center justify-between mt-5">
               <div className="flex items-center gap-1.5">
                 {strategies.map((_, idx) => (
