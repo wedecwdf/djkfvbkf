@@ -21,6 +21,7 @@ export default function Profile() {
   const [message, setMessage] = useState("");
   const [orders, setOrders] = useState<StrategyOrder[]>([]);
   const [stats, setStats] = useState({ total: 0, completed: 0 });
+  const [showWechatModal, setShowWechatModal] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -106,7 +107,6 @@ export default function Profile() {
     }
   };
 
-  // 关键修复：等待 authLoading 结束，若仍无用户则重定向
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -147,7 +147,7 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* 其余部分保持不变（快速提示、表单、订单列表等） */}
+      {/* 快速提示卡片 */}
       <div className="bg-gradient-to-r from-red-50 to-amber-50 border border-red-200 rounded-2xl p-5 mb-8 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shadow-md">
@@ -394,30 +394,50 @@ export default function Profile() {
             </a>
           </div>
 
+          {/* 帮助卡片 - 微信二维码弹窗 */}
           <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-5 text-white">
-  <i className="fas fa-headset text-2xl mb-3"></i>
-  <h4 className="font-bold mb-1">需要帮助？</h4>
-  <p className="text-gray-300 text-sm mb-4">我们的策略顾问随时为您解答。</p>
-  <button 
-    onClick={() => {
-      const choice = prompt('请选择联系方式：\n输入 1 联系 QQ\n输入 2 联系微信（将复制微信号）');
-      if (choice === '1') {
-        window.open('https://wpa.qq.com/msgrd?v=3&uin=1491198241&site=qq&menu=yes', '_blank');
-      } else if (choice === '2') {
-        navigator.clipboard?.writeText('15829615585');
-        alert('微信号 15829615585 已复制到剪贴板，请打开微信添加好友');
-      } else if (choice !== null) {
-        alert('无效选择');
-      }
-    }}
-    className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition w-full"
-  >
-    联系专属顾问
-  </button>
-</div>
+            <i className="fas fa-headset text-2xl mb-3"></i>
+            <h4 className="font-bold mb-1">需要帮助？</h4>
+            <p className="text-gray-300 text-sm mb-4">扫码添加微信，专属顾问在线解答</p>
+            <button 
+              onClick={() => setShowWechatModal(true)}
+              className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition w-full"
+            >
+              <i className="fab fa-weixin mr-2"></i>联系专属顾问
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* 微信二维码模态框 */}
+      {showWechatModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setShowWechatModal(false)}>
+          <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="text-center">
+              <i className="fab fa-weixin text-4xl text-green-500 mb-3"></i>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">添加微信顾问</h3>
+              <p className="text-gray-500 text-sm mb-4">扫描下方二维码，我们将为您提供一对一服务</p>
+              <div className="bg-gray-100 p-4 rounded-xl inline-block">
+                <img 
+                  src="/wechat-qr.png" 
+                  alt="微信二维码" 
+                  className="w-48 h-48 object-contain"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect width=\'200\' height=\'200\' fill=\'%23f3f4f6\'/%3E%3Ctext x=\'50%%\' y=\'50%%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'sans-serif\' font-size=\'14\' fill=\'%236b7280\'%3E请上传二维码%3C/text%3E%3C/svg%3E';
+                  }}
+                />
+              </div>
+              <p className="text-xs text-gray-400 mt-4">或手动搜索微信号：<span className="font-mono text-gray-700">quant_code</span></p>
+              <button 
+                onClick={() => setShowWechatModal(false)}
+                className="mt-5 w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-lg text-sm font-medium transition"
+              >
+                关闭
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
