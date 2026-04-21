@@ -118,7 +118,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 md:py-12 pt-24">
+    <div className="max-w-6xl mx-auto px-4 py-8 md:py-12 pt-28 md:pt-32">
       {/* 欢迎头部 */}
       <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
@@ -413,4 +413,5 @@ export default function Profile() {
     </div>
   );
 }
+
 
