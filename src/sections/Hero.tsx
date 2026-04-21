@@ -72,33 +72,11 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* 数据看板 (强化版) */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover-lift">
-          <div className="flex items-center justify-between"><span className="text-gray-500 text-sm">累计交付</span><i className="fas fa-check-circle text-green-500"></i></div>
-          <div className="text-4xl font-bold text-gray-800 mt-1">128<span className="text-base font-normal text-gray-400 ml-1">个</span></div>
-          <div className="text-xs text-green-600 mt-2"><i className="fas fa-arrow-up"></i> +12 本月</div>
-        </div>
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover-lift">
-          <div className="flex items-center justify-between"><span className="text-gray-500 text-sm">客户评分</span><i className="fas fa-star text-yellow-400"></i></div>
-          <div className="text-4xl font-bold text-gray-800 mt-1">4.95<span className="text-base font-normal text-gray-400 ml-1">/5.0</span></div>
-          <div className="text-xs text-gray-500 mt-2">基于 86 条评价</div>
-        </div>
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover-lift">
-          <div className="flex items-center justify-between"><span className="text-gray-500 text-sm">平均交付</span><i className="fas fa-hourglass-half text-blue-500"></i></div>
-          <div className="text-4xl font-bold text-gray-800 mt-1">2.4<span className="text-base font-normal text-gray-400 ml-1">天</span></div>
-          <div className="text-xs text-blue-600 mt-2"><i className="fas fa-bolt"></i> 加急可24h</div>
-        </div>
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover-lift">
-          <div className="flex items-center justify-between"><span className="text-gray-500 text-sm">复购率</span><i className="fas fa-redo-alt text-purple-500"></i></div>
-          <div className="text-4xl font-bold text-gray-800 mt-1">72<span className="text-base font-normal text-gray-400 ml-1">%</span></div>
-          <div className="text-xs text-purple-600 mt-2">客户再次委托</div>
-        </div>
-      </div>
-    </section>
+      </section>
   );
 };
 
 export default Hero;
+
 
 
