@@ -1,9 +1,10 @@
-﻿import { useState } from
-import { useNavigate } from "react";
+﻿import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
@@ -36,7 +37,8 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    await signOut(); navigate('/');
+    await signOut();
+    navigate("/");
   };
 
   return (
@@ -61,9 +63,12 @@ const Navbar = () => {
           <div className="flex gap-2 items-center">
             {user ? (
               <>
-                <a href="/profile" className="text-sm font-medium text-gray-600 hover:text-red-600 px-3 py-1.5">
+                <button
+                  onClick={() => navigate("/profile")}
+                  className="text-sm font-medium text-gray-600 hover:text-red-600 px-3 py-1.5"
+                >
                   个人中心
-                </a>
+                </button>
                 <button
                   onClick={handleLogout}
                   className="bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-1.5 rounded-lg"
@@ -160,6 +165,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
