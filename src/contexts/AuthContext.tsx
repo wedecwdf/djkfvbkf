@@ -34,11 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [])
 
   const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {}
-    })
+    const { error } = await supabase.auth.signUp({ email, password })
     return { error }
   }
 
@@ -61,7 +57,3 @@ export const useAuth = () => {
   if (!context) throw new Error('useAuth must be used within AuthProvider')
   return context
 }
-
-
-
-
