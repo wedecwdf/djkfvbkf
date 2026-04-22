@@ -1,6 +1,7 @@
-﻿import { useState } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
@@ -15,6 +16,16 @@ const Navbar = () => {
 
   const { signUp, signIn } = useAuth();
 
+  // 预热 Supabase 客户端（提前建立连接）
+  useEffect(() => {
+    const warmup = async () => {
+      try {
+        await supabase.auth.getSession();
+      } catch (e) {}
+    };
+    warmup();
+  }, []);
+
   const handleNavClick = (sectionId: string) => {
     if (location.pathname === "/") {
       const element = document.getElementById(sectionId);
@@ -27,11 +38,24 @@ const Navbar = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
-    const result = isLogin ? await signIn(email, password) : await signUp(email, password);
+    setLoading(true); // 立即显示加载状态
+
+    const startTime = performance.now();
+    let result;
+    
+    try {
+      result = isLogin ? await signIn(email, password) : await signUp(email, password);
+    } catch (err: any) {
+      result = { error: err };
+    }
+    
+    const endTime = performance.now();
+    console.log(`[Auth] ${isLogin ? '登录' : '注册'} 请求耗时: ${(endTime - startTime).toFixed(0)}ms`);
+
     setLoading(false);
     if (result.error) {
       setError(result.error.message);
+      console.error('[Auth] 错误详情:', result.error);
     } else {
       setShowAuthModal(false);
       if (!isLogin) alert("注册成功！请登录。");
@@ -39,7 +63,9 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
+    const startTime = performance.now();
     await signOut();
+    console.log(`[Auth] 退出请求耗时: ${(performance.now() - startTime).toFixed(0)}ms`);
     navigate("/");
   };
 
@@ -78,11 +104,9 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* 美化后的认证弹窗 */}
       {showAuthModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
           <div className="auth-card w-full max-w-md p-6 md:p-8 bg-white/85 backdrop-blur-xl rounded-3xl border border-red-100/50 shadow-2xl shadow-red-200/30">
-            {/* 选项卡 */}
             <div className="flex gap-6 mb-6 border-b border-gray-200/60 pb-2">
               <button
                 onClick={() => setIsLogin(true)}
@@ -163,7 +187,6 @@ const Navbar = () => {
                 {isLogin ? "立即注册" : "去登录"}
               </button>
             </p>
-            {/* 装饰性社交登录 */}
             <div className="relative my-5">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200"></div>
