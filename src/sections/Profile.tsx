@@ -216,6 +216,7 @@ pause
             </div>
 
             <form onSubmit={handleSubmitStrategy} className="space-y-5">
+              {/* 策略描述 */}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="block text-sm font-semibold text-gray-700">
@@ -237,63 +238,129 @@ pause
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* 双列：编程语言 + 回测框架 (美化版) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* 编程语言 */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    <i className="fab fa-python mr-2 text-blue-600"></i>期望编程语言
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium mb-2">
+                      <i className="fab fa-python"></i> 期望语言
+                    </span>
                   </label>
-                  <select
-                    name="language"
-                    defaultValue="Python (推荐)"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-sm text-gray-700 focus:border-red-500 focus:ring-4 focus:ring-red-100 transition cursor-pointer"
-                  >
-                    <option>Python (推荐)</option>
-                    <option>JavaScript</option>
-                    <option>MQL4 / MQL5</option>
-                    <option>其他</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      name="language"
+                      defaultValue="Python (推荐)"
+                      className="select-field w-full px-5 py-3.5 rounded-2xl border border-gray-200 bg-white/70 backdrop-blur-sm text-gray-700 font-medium appearance-none cursor-pointer focus:border-red-500 focus:ring-4 focus:ring-red-100 transition"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 1rem center',
+                        backgroundSize: '1rem'
+                      }}
+                    >
+                      <option>Python (推荐)</option>
+                      <option>JavaScript</option>
+                      <option>MQL4 / MQL5</option>
+                      <option>其他</option>
+                    </select>
+                    <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                      <i className="fab fa-python text-blue-600 text-lg"></i>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
+                    <i className="fas fa-check-circle text-green-500 text-[10px]"></i> 我们推荐 Python，生态最完善
+                  </p>
                 </div>
+
+                {/* 回测框架 */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    <i className="fas fa-chart-bar mr-2 text-green-600"></i>回测框架（可选）
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-medium mb-2">
+                      <i className="fas fa-chart-bar"></i> 回测框架 (可选)
+                    </span>
                   </label>
-                  <select
-                    name="framework"
-                    defaultValue="不限"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-sm text-gray-700 focus:border-red-500 focus:ring-4 focus:ring-red-100 transition cursor-pointer"
-                  >
-                    <option>不限</option>
-                    <option>Backtrader</option>
-                    <option>Zipline</option>
-                    <option>VectorBT</option>
-                    <option>MT5 自带</option>
-                    <option>其他</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      name="framework"
+                      defaultValue="不限"
+                      className="select-field w-full px-5 py-3.5 rounded-2xl border border-gray-200 bg-white/70 backdrop-blur-sm text-gray-700 appearance-none cursor-pointer focus:border-red-500 focus:ring-4 focus:ring-red-100 transition"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 1rem center',
+                        backgroundSize: '1rem'
+                      }}
+                    >
+                      <option>不限</option>
+                      <option>Backtrader</option>
+                      <option>Zipline</option>
+                      <option>VectorBT</option>
+                      <option>MT5 自带</option>
+                      <option>其他</option>
+                    </select>
+                    <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                      <i className="fas fa-chart-line text-green-600 text-lg"></i>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1.5 flex items-center gap-1">
+                    <i className="fas fa-dice-d6 text-green-500"></i> 不指定则由我们选择最佳框架
+                  </p>
                 </div>
               </div>
 
+              {/* 交付周期偏好 */}
               <div className="pt-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  <i className="fas fa-clock mr-2 text-orange-500"></i>交付周期偏好
+                </label>
+                <div className="flex flex-wrap gap-6">
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <input type="radio" name="delivery" className="w-5 h-5 accent-red-600" defaultChecked />
+                    <span className="text-gray-700 group-hover:text-gray-900 transition">
+                      <span className="font-medium">标准</span> <span className="text-xs text-gray-500 ml-1">(3-5个工作日)</span>
+                    </span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <input type="radio" name="delivery" className="w-5 h-5 accent-red-600" />
+                    <span className="text-gray-700 group-hover:text-gray-900 transition">
+                      <span className="font-medium">加急</span> <span className="text-xs text-gray-500 ml-1">(24-48h，费用+30%)</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              {/* 提交按钮 + 信任徽章 */}
+              <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-red-200 transition flex items-center justify-center gap-3 text-base"
+                  className="submit-btn w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-red-200 transition flex items-center justify-center gap-3 text-base"
                 >
                   <i className="fas fa-paper-plane"></i> 提交需求 · 免费获取评估
                 </button>
-                <p className="text-center text-xs text-gray-400 mt-3 flex items-center justify-center gap-2">
-                  <i className="fas fa-shield-alt text-green-500"></i> 代码编写完全免费 · 仅部署与维护收费
-                  <span className="mx-1">•</span>
-                  <i className="fas fa-lock"></i> 严格保密
-                </p>
+                <div className="flex flex-wrap items-center justify-center gap-5 mt-4">
+                  <span className="inline-flex items-center gap-1.5 text-xs text-gray-600">
+                    <i className="fas fa-shield-alt text-green-500"></i> 保密协议
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-gray-600">
+                    <i className="fas fa-code text-red-500"></i> 代码编写完全免费
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-gray-600">
+                    <i className="fas fa-cloud-upload-alt text-blue-500"></i> 仅部署/维护收费
+                  </span>
+                </div>
               </div>
             </form>
 
-            <div className="mt-5 pt-4 border-t border-gray-200/70">
+            {/* 底部策略库快捷入口 */}
+            <div className="mt-6 pt-5 border-t border-gray-200/70">
               <p className="text-sm text-gray-500 flex items-center gap-2">
                 <i className="fas fa-book-open text-red-400"></i>
                 <span>不知道怎么写？试试我们的</span>
                 <a href="#" className="text-red-600 font-medium hover:underline inline-flex items-center gap-1">
                   策略模板库 <i className="fas fa-arrow-right text-xs"></i>
                 </a>
+                <span className="text-gray-400 text-xs ml-auto hidden sm:block">双均线 · 海龟交易 · 网格 · MACD</span>
               </p>
             </div>
           </div>
