@@ -53,7 +53,7 @@ const Navbar = () => {
     });
     setLoading(false);
     if (error) {
-      setError(error.message);
+      setError(error.message.includes('rate limit') ? '发送过于频繁，请稍后重试' : error.message);
     } else {
       setStep("code");
       startCountdown();
@@ -71,7 +71,7 @@ const Navbar = () => {
     });
     setLoading(false);
     if (error) {
-      setError(error.message);
+      setError(error.message.includes('rate limit') ? '发送过于频繁，请稍后重试' : error.message);
     } else {
       setStep("password");
     }
@@ -84,7 +84,7 @@ const Navbar = () => {
     const { error } = await supabase.auth.updateUser({ password });
     setLoading(false);
     if (error) {
-      setError(error.message);
+      setError(error.message.includes('rate limit') ? '发送过于频繁，请稍后重试' : error.message);
     } else {
       alert("注册成功！");
       setShowAuthModal(false);
@@ -205,3 +205,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
