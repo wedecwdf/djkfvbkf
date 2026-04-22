@@ -83,7 +83,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" className="pt-28 pb-12 px-6 max-w-7xl mx-auto">
+    <section id="hero" className="pt-24 pb-10 px-6 max-w-7xl mx-auto">
       <div className="grid lg:grid-cols-2 gap-10 items-center">
         {/* 左侧内容不变 */}
         <div className="animate__animated animate__fadeInLeft">
@@ -232,5 +232,6 @@ const Hero = () => {
 };
 
 export default Hero;
+
 
 

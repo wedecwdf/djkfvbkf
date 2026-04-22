@@ -1,6 +1,6 @@
 ﻿const Workflow = () => {
   return (
-    <section id="workflow" className="py-12 px-6 max-w-7xl mx-auto relative">
+    <section id="workflow" className="py-10 px-6 max-w-7xl mx-auto relative">
       {/* 区块标题 */}
       <div className="text-center mb-14">
         <span className="text-red-600 font-semibold text-sm uppercase tracking-wider bg-red-50 px-3 py-1 rounded-full">
@@ -98,4 +98,5 @@
 };
 
 export default Workflow;
+
 
