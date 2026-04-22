@@ -361,15 +361,9 @@ pause
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-4 mt-1">
-                <span className="inline-flex items-center gap-1 text-[11px] text-gray-500">
-                  <i className="fas fa-shield-alt text-green-500 text-xs"></i> 保密协议
-                </span>
-                <span className="inline-flex items-center gap-1 text-[11px] text-gray-500">
-                  <i className="fas fa-code text-red-500 text-xs"></i> 代码编写完全免费
-                </span>
-                <span className="inline-flex items-center gap-1 text-[11px] text-gray-500">
-                  <i className="fas fa-cloud-upload-alt text-blue-500 text-xs"></i> 仅部署/维护收费
-                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-50/80 border border-green-200 text-green-700 text-[11px]"><i className="fas fa-shield-alt text-green-600 text-xs"></i>保密协议</span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50/80 border border-red-200 text-red-700 text-[11px]"><i className="fas fa-code text-red-600 text-xs"></i>代码编写完全免费</span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50/80 border border-blue-200 text-blue-700 text-[11px]"><i className="fas fa-cloud-upload-alt text-blue-600 text-xs"></i>仅部署/维护收费</span>
               </div>
             </form>
 
@@ -649,3 +643,4 @@ pause
     </div>
   );
 }
+
