@@ -3,10 +3,64 @@
 const CodeExample = () => {
   const [activeLang, setActiveLang] = useState<"python" | "javascript">("python");
 
+  const pythonCode = `import pandas as pd
+import numpy as np
+
+class MACDStrategy:
+    def __init__(self, fast=12, slow=26, signal=9):
+        self.fast = fast
+        self.slow = slow
+        self.signal = signal
+    
+    def generate_signals(self, df):
+        # 计算指数移动平均
+        exp1 = df['close'].ewm(span=self.fast).mean()
+        exp2 = df['close'].ewm(span=self.slow).mean()
+        df['macd'] = exp1 - exp2
+        df['signal_line'] = df['macd'].ewm(span=self.signal).mean()
+        df['position'] = np.where(df['macd'] > df['signal_line'], 1, -1)
+        return df`;
+
+  const javascriptCode = `class MACDStrategy {
+  constructor(fast = 12, slow = 26, signal = 9) {
+    this.fast = fast;
+    this.slow = slow;
+    this.signal = signal;
+  }
+
+  generateSignals(df) {
+    // 模拟 ewm 计算 (示意)
+    const exp1 = df.map(d => d.close).ewm(this.fast).mean();
+    const exp2 = df.map(d => d.close).ewm(this.slow).mean();
+    const macd = exp1.map((v, i) => v - exp2[i]);
+    const signalLine = macd.ewm(this.signal).mean();
+    
+    return df.map((d, i) => ({
+      ...d,
+      macd: macd[i],
+      signal_line: signalLine[i],
+      position: macd[i] > signalLine[i] ? 1 : -1
+    }));
+  }
+}`;
+
+  const highlightedPython = pythonCode
+    .replace(/import|as|class|def|return|if|else|self/g, match => `<span class="text-[#c678dd]">${match}</span>`)
+    .replace(/#.*/g, match => `<span class="text-[#5c6370] italic">${match}</span>`)
+    .replace(/'[^']*'/g, match => `<span class="text-[#98c379]">${match}</span>`)
+    .replace(/\b\d+\b/g, match => `<span class="text-[#d19a66]">${match}</span>`)
+    .replace(/\b(pd|np|ewm|mean|where)\b/g, match => `<span class="text-[#61afef]">${match}</span>`);
+
+  const highlightedJavaScript = javascriptCode
+    .replace(/class|constructor|this|const|return|if|else/g, match => `<span class="text-[#c678dd]">${match}</span>`)
+    .replace(/\/\/.*/g, match => `<span class="text-[#5c6370] italic">${match}</span>`)
+    .replace(/`[^`]*`/g, match => `<span class="text-[#98c379]">${match}</span>`)
+    .replace(/\b\d+\b/g, match => `<span class="text-[#d19a66]">${match}</span>`)
+    .replace(/\b(map|ewm|mean|filter)\b/g, match => `<span class="text-[#61afef]">${match}</span>`);
+
   return (
     <section id="examples" className="py-16 px-6 max-w-7xl mx-auto">
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        {/* 左侧文字区 */}
         <div>
           <span className="inline-flex items-center gap-2 text-red-600 font-semibold text-sm uppercase tracking-wider mb-3">
             <span className="w-6 h-0.5 bg-red-400 rounded-full"></span> 代码示例
@@ -49,10 +103,8 @@ const CodeExample = () => {
           </div>
         </div>
 
-        {/* 右侧代码卡片 */}
         <div className="w-full max-w-[580px] lg:mx-auto">
           <div className="bg-gray-900/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 overflow-hidden">
-            {/* IDE 标题栏 */}
             <div className="flex items-center justify-between px-4 py-2.5 bg-gray-800/80 border-b border-gray-700">
               <div className="flex gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></span>
@@ -68,53 +120,15 @@ const CodeExample = () => {
               <div className="w-8"></div>
             </div>
 
-            {/* 代码内容区 */}
             <div className="bg-[#1e1e2e] px-5 py-4 max-h-[360px] overflow-auto font-mono text-[0.8rem] leading-relaxed">
-              {activeLang === "python" ? (
-                <pre className="text-[#e5e9f0] m-0">
-                  <span className="text-[#c678dd]">import</span> pandas <span className="text-[#c678dd]">as</span> pd{"\n"}
-                  <span className="text-[#c678dd]">import</span> numpy <span className="text-[#c678dd]">as</span> np{"\n\n"}
-                  <span className="text-[#c678dd]">class</span> <span className="text-[#61afef]">MACDStrategy</span>:{"\n"}
-                  {"    "}<span className="text-[#c678dd]">def</span> <span className="text-[#61afef]">__init__</span>(<span className="text-[#c678dd]">self</span>, fast=<span className="text-[#d19a66]">12</span>, slow=<span className="text-[#d19a66]">26</span>, signal=<span className="text-[#d19a66]">9</span>):{"\n"}
-                  {"        "}<span className="text-[#c678dd]">self</span>.fast = fast{"\n"}
-                  {"        "}<span className="text-[#c678dd]">self</span>.slow = slow{"\n"}
-                  {"        "}<span className="text-[#c678dd]">self</span>.signal = signal{"\n\n"}
-                  {"    "}<span className="text-[#c678dd]">def</span> <span className="text-[#61afef]">generate_signals</span>(<span className="text-[#c678dd]">self</span>, df):{"\n"}
-                  {"        "}<span className="text-[#5c6370] italic"># 计算指数移动平均</span>{"\n"}
-                  {"        "}exp1 = df[<span className="text-[#98c379]">'close'</span>].ewm(span=<span className="text-[#c678dd]">self</span>.fast).mean(){"\n"}
-                  {"        "}exp2 = df[<span className="text-[#98c379]">'close'</span>].ewm(span=<span className="text-[#c678dd]">self</span>.slow).mean(){"\n"}
-                  {"        "}df[<span className="text-[#98c379]">'macd'</span>] = exp1 - exp2{"\n"}
-                  {"        "}df[<span className="text-[#98c379]">'signal_line'</span>] = df[<span className="text-[#98c379]">'macd'</span>].ewm(span=<span className="text-[#c678dd]">self</span>.signal).mean(){"\n"}
-                  {"        "}df[<span className="text-[#98c379]">'position'</span>] = np.where(df[<span className="text-[#98c379]">'macd'</span>] &gt; df[<span className="text-[#98c379]">'signal_line'</span>], <span className="text-[#d19a66]">1</span>, -<span className="text-[#d19a66]">1</span>){"\n"}
-                  {"        "}<span className="text-[#c678dd]">return</span> df{"\n"}
-                </pre>
-              ) : (
-                <pre className="text-[#e5e9f0] m-0">
-                  <span className="text-[#c678dd]">class</span> <span className="text-[#61afef]">MACDStrategy</span> {"{"}{"\n"}
-                  {"  "}<span className="text-[#61afef]">constructor</span>(fast = <span className="text-[#d19a66]">12</span>, slow = <span className="text-[#d19a66]">26</span>, signal = <span className="text-[#d19a66]">9</span>) {"{"}{"\n"}
-                  {"    "}<span className="text-[#c678dd]">this</span>.fast = fast;{"\n"}
-                  {"    "}<span className="text-[#c678dd]">this</span>.slow = slow;{"\n"}
-                  {"    "}<span className="text-[#c678dd]">this</span>.signal = signal;{"\n"}
-                  {"  }"}{"\n\n"}
-                  {"  "}<span className="text-[#61afef]">generateSignals</span>(df) {"{"}{"\n"}
-                  {"    "}<span className="text-[#5c6370] italic">// 模拟 ewm 计算 (示意)</span>{"\n"}
-                  {"    "}<span className="text-[#c678dd]">const</span> exp1 = df.map(d =&gt; d.close).ewm(<span className="text-[#c678dd]">this</span>.fast).mean();{"\n"}
-                  {"    "}<span className="text-[#c678dd]">const</span> exp2 = df.map(d =&gt; d.close).ewm(<span className="text-[#c678dd]">this</span>.slow).mean();{"\n"}
-                  {"    "}<span className="text-[#c678dd]">const</span> macd = exp1.map((v, i) =&gt; v - exp2[i]);{"\n"}
-                  {"    "}<span className="text-[#c678dd]">const</span> signalLine = macd.ewm(<span className="text-[#c678dd]">this</span>.signal).mean();{"\n\n"}
-                  {"    "}<span className="text-[#c678dd]">return</span> df.map((d, i) =&gt; ({"{"}{"\n"}
-                  {"      "}...d,{"\n"}
-                  {"      "}macd: macd[i],{"\n"}
-                  {"      "}signal_line: signalLine[i],{"\n"}
-                  {"      "}position: macd[i] &gt; signalLine[i] ? <span className="text-[#d19a66]">1</span> : -<span className="text-[#d19a66]">1</span>{"\n"}
-                  {"    }"));{"\n"}
-                  {"  }"}{"\n"}
-                  {"}"}{"\n"}
-                </pre>
-              )}
+              <pre
+                className="text-[#e5e9f0] m-0"
+                dangerouslySetInnerHTML={{
+                  __html: activeLang === "python" ? highlightedPython : highlightedJavaScript,
+                }}
+              />
             </div>
 
-            {/* 底部状态栏 */}
             <div className="flex items-center justify-between px-4 py-1.5 bg-gray-800/50 text-xs text-gray-500 border-t border-gray-700">
               <div className="flex items-center gap-3">
                 <span><i className="far fa-file-code mr-1"></i>UTF-8</span>
@@ -124,7 +138,6 @@ const CodeExample = () => {
             </div>
           </div>
 
-          {/* 快捷操作 */}
           <div className="flex justify-end gap-3 mt-3">
             <button className="text-gray-500 hover:text-gray-700 text-sm flex items-center gap-1 transition">
               <i className="far fa-copy"></i> 复制代码
