@@ -1,7 +1,6 @@
-﻿import { useState, useRef } from "react";
+﻿import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/lib/supabaseClient";
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
@@ -13,13 +12,8 @@ const Navbar = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  
-  const [step, setStep] = useState<"email" | "code" | "password">("email");
-  const [code, setCode] = useState("");
-  const [countdown, setCountdown] = useState(0);
-  const timerRef = useRef<number | null>(null);
 
-  const { signIn } = useAuth();
+  const { signUp, signIn } = useAuth();
 
   const handleNavClick = (sectionId: string) => {
     if (location.pathname === "/") {
@@ -30,92 +24,24 @@ const Navbar = () => {
     }
   };
 
-  const startCountdown = () => {
-    setCountdown(60);
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = window.setInterval(() => {
-      setCountdown(prev => {
-        if (prev <= 1) { clearInterval(timerRef.current!); return 0; }
-        return prev - 1;
-      });
-    }, 1000);
-  };
-
-  const handleSendCode = async () => {
-    if (!email) { setError("请输入邮箱地址"); return; }
-    setError("");
-    setLoading(true);
-    // 改用 signUp 发送确认邮件（包含验证码）
-    const { error } = await supabase.auth.signUp({
-      email,
-      password: "temporary123", // 临时密码，稍后会被覆盖
-      options: { emailRedirectTo: window.location.origin + "/profile" }
-    });
-    setLoading(false);
-    if (error) {
-      setError(error.message.includes('rate limit') ? '发送过于频繁，请稍后重试' : error.message);
-    } else {
-      setStep("code");
-      startCountdown();
-    }
-  };
-
-  const handleVerifyCode = async () => {
-    if (!code) { setError("请输入验证码"); return; }
-    setError("");
-    setLoading(true);
-    const { error } = await supabase.auth.verifyOtp({
-      email,
-      token: code,
-      type: "signup",
-    });
-    setLoading(false);
-    if (error) {
-      setError(error.message.includes('rate limit') ? '发送过于频繁，请稍后重试' : error.message);
-    } else {
-      setStep("password");
-    }
-  };
-
-  const handleSetPassword = async () => {
-    if (!password || password.length < 6) { setError("密码至少6位"); return; }
-    setError("");
-    setLoading(true);
-    const { error } = await supabase.auth.updateUser({ password });
-    setLoading(false);
-    if (error) {
-      setError(error.message.includes('rate limit') ? '发送过于频繁，请稍后重试' : error.message);
-    } else {
-      alert("注册成功！");
-      setShowAuthModal(false);
-      resetForm();
-    }
-  };
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const result = await signIn(email, password);
+    const result = isLogin ? await signIn(email, password) : await signUp(email, password);
     setLoading(false);
-    if (result.error) setError(result.error.message);
-    else setShowAuthModal(false);
+    if (result.error) {
+      setError(result.error.message);
+    } else {
+      setShowAuthModal(false);
+      if (!isLogin) alert("注册成功！请登录。");
+    }
   };
 
-  const resetForm = () => {
-    setStep("email");
-    setEmail("");
-    setPassword("");
-    setCode("");
-    setError("");
-    setCountdown(0);
-    if (timerRef.current) clearInterval(timerRef.current);
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
   };
-
-  const handleLogout = async () => { await signOut(); navigate("/"); };
-  const closeModal = () => { setShowAuthModal(false); resetForm(); };
-  const switchToLogin = () => { setIsLogin(true); resetForm(); };
-  const switchToRegister = () => { setIsLogin(false); resetForm(); };
 
   return (
     <>
@@ -125,14 +51,16 @@ const Navbar = () => {
             <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
               <i className="fas fa-code text-white text-sm"></i>
             </div>
-            <span className="text-xl font-bold">策略<span className="text-red-600">代码工坊</span></span>
+            <span className="text-xl font-bold">
+              策略<span className="text-red-600">代码工坊</span>
+            </span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <button onClick={() => handleNavClick("hero")} className="text-gray-700 hover:text-red-600">首页</button>
-            <button onClick={() => handleNavClick("services")} className="text-gray-700 hover:text-red-600">服务</button>
-            <button onClick={() => handleNavClick("workflow")} className="text-gray-700 hover:text-red-600">流程</button>
-            <button onClick={() => handleNavClick("examples")} className="text-gray-700 hover:text-red-600">示例</button>
-            <button onClick={() => handleNavClick("contact")} className="text-gray-700 hover:text-red-600">联系</button>
+            <button onClick={() => handleNavClick("hero")} className="text-gray-700 hover:text-red-600 transition">首页</button>
+            <button onClick={() => handleNavClick("services")} className="text-gray-700 hover:text-red-600 transition">服务</button>
+            <button onClick={() => handleNavClick("workflow")} className="text-gray-700 hover:text-red-600 transition">流程</button>
+            <button onClick={() => handleNavClick("examples")} className="text-gray-700 hover:text-red-600 transition">示例</button>
+            <button onClick={() => handleNavClick("contact")} className="text-gray-700 hover:text-red-600 transition">联系</button>
           </div>
           <div className="flex gap-2 items-center">
             {user ? (
@@ -153,49 +81,52 @@ const Navbar = () => {
       {showAuthModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl">
-            <h2 className="text-2xl font-bold mb-4">
-              {isLogin ? "登录" : (step === "email" ? "注册" : step === "code" ? "输入验证码" : "设置密码")}
-            </h2>
-            
-            {isLogin ? (
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div><label className="block text-sm font-medium mb-1">邮箱</label><input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500" /></div>
-                <div><label className="block text-sm font-medium mb-1">密码</label><input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500" /></div>
-                {error && <p className="text-red-600 text-sm">{error}</p>}
-                <button type="submit" disabled={loading} className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg disabled:opacity-50">{loading ? "处理中..." : "登录"}</button>
-              </form>
-            ) : (
-              <div className="space-y-4">
-                {step === "email" && (
-                  <>
-                    <div><label className="block text-sm font-medium mb-1">邮箱</label><input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500" /></div>
-                    {error && <p className="text-red-600 text-sm">{error}</p>}
-                    <button onClick={handleSendCode} disabled={loading || !email} className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg disabled:opacity-50">{loading ? "发送中..." : "获取验证码"}</button>
-                  </>
-                )}
-                {step === "code" && (
-                  <>
-                    <div><label className="block text-sm font-medium mb-1">验证码</label><input type="text" required value={code} onChange={e => setCode(e.target.value)} placeholder="请输入邮箱收到的6位验证码" className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500" /></div>
-                    {error && <p className="text-red-600 text-sm">{error}</p>}
-                    <div className="flex gap-2">
-                      <button onClick={handleVerifyCode} disabled={loading || !code} className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg disabled:opacity-50">{loading ? "验证中..." : "下一步"}</button>
-                      <button onClick={handleSendCode} disabled={countdown > 0} className="px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium disabled:opacity-50">{countdown > 0 ? `${countdown}秒后重发` : "重新发送"}</button>
-                    </div>
-                  </>
-                )}
-                {step === "password" && (
-                  <>
-                    <div><label className="block text-sm font-medium mb-1">设置密码</label><input type="password" required minLength={6} value={password} onChange={e => setPassword(e.target.value)} placeholder="至少6位" className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500" /></div>
-                    {error && <p className="text-red-600 text-sm">{error}</p>}
-                    <button onClick={handleSetPassword} disabled={loading || !password} className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg disabled:opacity-50">{loading ? "处理中..." : "完成注册"}</button>
-                  </>
-                )}
+            <h2 className="text-2xl font-bold mb-4">{isLogin ? "登录" : "注册"}</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">邮箱</label>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+                />
               </div>
-            )}
-            <button onClick={closeModal} className="mt-4 text-sm text-gray-500 hover:text-gray-700 w-full text-center">取消</button>
+              <div>
+                <label className="block text-sm font-medium mb-1">密码</label>
+                <input
+                  type="password"
+                  required
+                  minLength={6}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+                />
+              </div>
+              {error && <p className="text-red-600 text-sm">{error}</p>}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg transition disabled:opacity-50"
+              >
+                {loading ? "处理中..." : isLogin ? "登录" : "注册"}
+              </button>
+            </form>
+            <button
+              onClick={() => setShowAuthModal(false)}
+              className="mt-4 text-sm text-gray-500 hover:text-gray-700 w-full text-center"
+            >
+              取消
+            </button>
             <p className="mt-2 text-center text-sm">
               {isLogin ? "没有账号？" : "已有账号？"}
-              <button onClick={isLogin ? switchToRegister : switchToLogin} className="text-red-600 font-medium ml-1">{isLogin ? "去注册" : "去登录"}</button>
+              <button
+                onClick={() => setIsLogin(!isLogin)}
+                className="text-red-600 font-medium ml-1"
+              >
+                {isLogin ? "去注册" : "去登录"}
+              </button>
             </p>
           </div>
         </div>
@@ -205,4 +136,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
