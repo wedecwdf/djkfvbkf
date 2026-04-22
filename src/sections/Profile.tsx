@@ -379,78 +379,60 @@ pause
             </div>
           </div>
 
-          {/* 我的策略订单 */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-4">
+          {/* 我的策略订单 (精简美化) */}
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200/80 p-5">
+            <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <i className="fas fa-list-check text-red-600"></i>
-                <h2 className="text-lg font-bold text-gray-800">我的策略订单</h2>
+                <i className="fas fa-list-check text-red-500"></i>
+                <h2 className="text-base font-bold text-gray-800">我的策略订单</h2>
               </div>
-              <a href="#" className="text-sm text-red-600 hover:underline">查看全部</a>
+              <a href="#" className="text-xs font-medium text-red-600 hover:underline">查看全部</a>
             </div>
-            
-            <div className="space-y-4">
+            <div className="space-y-3">
               {orders.length === 0 ? (
                 <div className="text-center py-8 text-gray-500">
-                  <i className="fas fa-inbox text-3xl mb-3 opacity-50"></i>
-                  <p>暂无策略订单，点击上方提交您的第一个需求吧！</p>
+                  <i className="fas fa-inbox text-2xl mb-2 opacity-50"></i>
+                  <p className="text-sm">暂无策略订单，点击上方提交您的第一个需求吧！</p>
                 </div>
               ) : (
                 orders.slice(0, 3).map((order) => (
-                  <div key={order.id} className="border border-gray-200 rounded-xl p-4 hover:shadow-md transition">
+                  <div key={order.id} className="order-item border border-gray-200 rounded-xl p-4 bg-white/60 hover:shadow-md transition">
                     <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-                            order.status === "pending"
-                              ? "bg-gray-100 text-gray-700"
-                              : order.status === "in_progress"
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-green-100 text-green-700"
-                          }`}
-                        >
+                      <div className="flex items-center gap-2">
+                        <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+                          order.status === "pending" ? "bg-gray-100 text-gray-700" :
+                          order.status === "in_progress" ? "bg-yellow-100 text-yellow-700" :
+                          "bg-green-100 text-green-700"
+                        }`}>
                           {order.status === "pending" ? "待处理" : order.status === "in_progress" ? "进行中" : "已完成"}
                         </span>
-                        <h3 className="font-semibold text-gray-800">
-                          {order.title} ({order.language})
-                        </h3>
+                        <h3 className="font-semibold text-gray-800 text-sm">{order.title} ({order.language})</h3>
                       </div>
                       <span className="text-xs text-gray-400">
                         {order.status === "completed" ? `交付于 ${order.delivered_at?.slice(0, 10)}` : `提交于 ${order.created_at.slice(0, 10)}`}
                       </span>
                     </div>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{order.description}</p>
+                    <p className="text-gray-600 text-xs mb-3 line-clamp-2">{order.description}</p>
                     {order.status === "in_progress" && order.progress !== undefined && (
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-sm">
+                        <div className="flex items-center gap-2 text-xs">
                           <span className="text-gray-500">进度：</span>
-                          <div className="w-32 bg-gray-200 rounded-full h-2">
-                            <div className="bg-red-500 h-2 rounded-full" style={{ width: `${order.progress}%` }}></div>
-                          </div>
+                          <div className="w-28 bg-gray-200 rounded-full h-1.5"><div className="bg-red-500 h-1.5 rounded-full" style={{ width: `${order.progress}%` }}></div></div>
                           <span className="text-gray-700 font-medium">{order.progress}%</span>
                         </div>
-                        <button className="text-red-600 text-sm font-medium hover:underline flex items-center gap-1">
-                          查看详情 <i className="fas fa-chevron-right text-xs"></i>
-                        </button>
+                        <button className="text-red-600 text-xs font-medium hover:underline flex items-center gap-1">查看详情 <i className="fas fa-chevron-right text-[10px]"></i></button>
                       </div>
                     )}
                     {order.status === "completed" && (
-                      <div className="flex flex-wrap gap-3">
+                      <div className="flex flex-wrap gap-2">
                         {order.file_url ? (
-                          <a
-                            href={order.file_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-red-50 hover:bg-red-100 text-red-700 px-4 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1"
-                          >
-                            <i className="fas fa-download text-xs"></i> 下载代码
+                          <a href={order.file_url} target="_blank" rel="noopener noreferrer" className="bg-red-50 hover:bg-red-100 text-red-700 px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1">
+                            <i className="fas fa-download text-[10px]"></i> 下载代码
                           </a>
                         ) : (
-                          <span className="text-gray-400 text-sm">等待上传</span>
+                          <span className="text-gray-400 text-xs">等待上传</span>
                         )}
-                        <button className="text-gray-600 hover:text-gray-800 text-sm font-medium flex items-center gap-1">
-                          <i className="far fa-comment-dots"></i> 反馈
-                        </button>
+                        <button className="text-gray-500 hover:text-gray-700 text-xs font-medium flex items-center gap-1"><i className="far fa-comment-dots"></i> 反馈</button>
                       </div>
                     )}
                   </div>
@@ -459,48 +441,37 @@ pause
             </div>
           </div>
 
-          {/* 免费策略资源 */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <i className="fas fa-gift text-red-600"></i>
-              <h2 className="text-lg font-bold text-gray-800">免费策略资源</h2>
+          {/* 免费策略资源 (精简美化) */}
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200/80 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <i className="fas fa-gift text-emerald-600"></i>
+              <h2 className="text-base font-bold text-gray-800">免费策略资源</h2>
+              <span className="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">限时免费</span>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-1">
               {resources.length === 0 ? (
-                <p className="text-gray-500 text-sm text-center py-4">暂无免费资源，敬请期待</p>
+                <div className="text-center py-6 text-gray-500">
+                  <i className="fas fa-box-open text-xl mb-1 opacity-50"></i>
+                  <p className="text-sm">暂无免费资源，敬请期待</p>
+                </div>
               ) : (
                 resources.slice(0, 5).map((r) => (
-                  <div key={r.id} className="flex items-center justify-between border-b border-gray-100 pb-3 last:border-0">
-                    <div className="flex-1">
-                      <p className="font-medium text-gray-800">{r.title}</p>
-                      <p className="text-xs text-gray-500">{r.description || "点击下载或运行"}</p>
+                  <div key={r.id} className="resource-item flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600"><i className="fab fa-python"></i></div>
+                      <div>
+                        <p className="font-medium text-gray-800 text-sm">{r.title}</p>
+                        <p className="text-xs text-gray-500">{r.description || "点击下载或运行"}</p>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <a
-                        href={r.file_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-red-600 hover:text-red-700 text-sm font-medium bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition"
-                        title="下载源代码"
-                      >
-                        <i className="fas fa-download"></i>
-                      </a>
-                      <button
-                        onClick={() => downloadRunScript(r)}
-                        className="text-green-600 hover:text-green-700 text-sm font-medium bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition"
-                        title="下载运行脚本 (.bat)，双击即可运行 (需安装Python)"
-                      >
-                        <i className="fas fa-play"></i>
-                      </button>
+                    <div className="flex items-center gap-1">
+                      <a href={r.file_url} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-700 text-xs font-medium bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition"><i className="fas fa-download"></i></a>
+                      <button onClick={() => downloadRunScript(r)} className="text-green-600 hover:text-green-700 text-xs font-medium bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition"><i className="fas fa-play"></i></button>
                     </div>
                   </div>
                 ))
               )}
             </div>
-            <p className="text-xs text-gray-400 mt-4 flex items-center gap-1">
-              <i className="fas fa-info-circle"></i> 
-              点击 <i className="fas fa-play text-green-600"></i> 将下载 .bat 脚本，双击即可自动运行对应 Python 代码（需安装 Python）。
-            </p>
           </div>
         </div>
 
@@ -643,5 +614,3 @@ pause
     </div>
   );
 }
-
-
