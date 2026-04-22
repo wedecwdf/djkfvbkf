@@ -184,25 +184,9 @@ pause
         </div>
       </div>
 
-      {/* 快速提示卡片 */}
-      <div className="bg-gradient-to-r from-red-50 to-amber-50 border border-red-200 rounded-2xl p-5 mb-8 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shadow-md">
-            <i className="fas fa-lightbulb text-white text-lg"></i>
-          </div>
-          <div>
-            <h3 className="font-bold text-gray-800">不懂代码？没关系！</h3>
-            <p className="text-gray-600 text-sm">用自然语言描述您的交易想法，我们的工程师将为您转化为精准代码。</p>
-          </div>
-        </div>
-        <a href="#" className="text-red-600 font-medium text-sm hover:underline flex items-center gap-1">
-          查看示例 <i className="fas fa-arrow-right text-xs"></i>
-        </a>
-      </div>
-
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          {/* 新建策略需求 (自适应宽度 + 紧凑美化) */}
+          {/* 新建策略需求 (已整合引导文案) */}
           <div className="bg-white/85 backdrop-blur-sm rounded-2xl shadow-sm border border-red-100/50 p-5 md:p-6">
             <div className="flex items-center gap-2 mb-5">
               <div className="w-9 h-9 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-md shadow-red-200">
@@ -210,7 +194,9 @@ pause
               </div>
               <div>
                 <h2 className="text-xl md:text-2xl font-bold text-gray-800">新建策略需求</h2>
-                <p className="text-gray-500 text-xs mt-0.5">用自然语言描述，我们转化为精准代码</p>
+                <p className="text-gray-500 text-xs mt-0.5">
+                  <i className="fas fa-lightbulb text-amber-400 mr-1"></i>不懂代码？没关系！用自然语言描述，我们转化为精准代码
+                </p>
               </div>
             </div>
 
@@ -379,7 +365,7 @@ pause
             </div>
           </div>
 
-          {/* 我的策略订单 (精简美化) */}
+          {/* 我的策略订单 */}
           <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200/80 p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -441,7 +427,7 @@ pause
             </div>
           </div>
 
-          {/* 免费策略资源 (精简美化) */}
+          {/* 免费策略资源 */}
           <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200/80 p-5">
             <div className="flex items-center gap-2 mb-3">
               <i className="fas fa-gift text-emerald-600"></i>
