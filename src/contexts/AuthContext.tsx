@@ -44,7 +44,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   const signOut = async () => {
-    await supabase.auth.signOut()
+    // 增加重试机制，解决锁竞争问题
+    const maxRetries = 3;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        await supabase.auth.signOut();
+        break; // 成功则退出循环
+      } catch (error: any) {
+        if (attempt === maxRetries) {
+          console.error('Sign out failed after retries:', error);
+          // 即使失败也强制清理本地状态
+          await supabase.auth.refreshSession();
+          const { error: signOutError } = await supabase.auth.signOut();
+          if (signOutError) throw signOutError;
+        } else {
+          // 等待一小段时间后重试
+          await new Promise(resolve => setTimeout(resolve, 100 * attempt));
+        }
+      }
+    }
   }
 
   const value = { user, session, loading, signUp, signIn, signOut }
