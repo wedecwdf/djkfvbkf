@@ -97,9 +97,9 @@ class MACDStrategy:
           </div>
 
           <div className="flex items-center gap-5 text-sm text-gray-500 border-t border-gray-200 pt-5">
-            <div className="flex items-center gap-1"><i className="fas fa-check-circle text-green-500"></i> 100%可运行</div>
-            <div className="flex items-center gap-1"><i className="fas fa-sync-alt text-blue-500"></i> 7天免费修改</div>
-            <div className="flex items-center gap-1"><i className="fas fa-lock text-purple-500"></i> 保密交付</div>
+            <span className="trust-badge border border-green-300 bg-green-50/50 text-green-700"><i className="fas fa-check-circle text-green-500 mr-1"></i>100%可运行</span>
+            <span className="trust-badge border border-blue-300 bg-blue-50/50 text-blue-700"><i className="fas fa-sync-alt text-blue-500 mr-1"></i>7天免费修改</span>
+            <span className="trust-badge border border-purple-300 bg-purple-50/50 text-purple-700"><i className="fas fa-lock text-purple-500 mr-1"></i>保密交付</span>
           </div>
         </div>
 
@@ -153,5 +153,6 @@ class MACDStrategy:
 };
 
 export default CodeExample;
+
 
 

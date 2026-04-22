@@ -31,9 +31,9 @@
           </p>
           <div className="mt-5 pt-4 border-t border-gray-100 w-full">
             <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
-              <span className="flex items-center gap-1"><i className="fas fa-file-alt text-red-400"></i> 支持图文</span>
-              <span className="flex items-center gap-1"><i className="fas fa-microphone text-red-400"></i> 语音说明</span>
-              <span className="flex items-center gap-1"><i className="fas fa-clock text-red-400"></i> 24h响应</span>
+              <span className="process-tag border border-purple-200 bg-purple-50/60 text-purple-700"><i className="fas fa-file-alt text-purple-500 text-[10px] mr-1"></i>支持图文</span>
+              <span className="process-tag border border-pink-200 bg-pink-50/60 text-pink-700"><i className="fas fa-microphone text-pink-500 text-[10px] mr-1"></i>语音说明</span>
+              <span className="process-tag border border-sky-200 bg-sky-50/60 text-sky-700"><i className="fas fa-clock text-sky-500 text-[10px] mr-1"></i>24h响应</span>
             </div>
           </div>
           {/* 桌面端连接线 */}
@@ -54,9 +54,9 @@
           </p>
           <div className="mt-5 pt-4 border-t border-gray-100 w-full">
             <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
-              <span className="flex items-center gap-1"><i className="fas fa-calculator text-red-400"></i> 即时估价</span>
-              <span className="flex items-center gap-1"><i className="fas fa-calendar-check text-red-400"></i> 明确周期</span>
-              <span className="flex items-center gap-1"><i className="fas fa-file-contract text-red-400"></i> 无隐藏费</span>
+              <span className="process-tag border border-amber-200 bg-amber-50/60 text-amber-700"><i className="fas fa-calculator text-amber-500 text-[10px] mr-1"></i>即时估价</span>
+              <span className="process-tag border border-emerald-200 bg-emerald-50/60 text-emerald-700"><i className="fas fa-calendar-check text-emerald-500 text-[10px] mr-1"></i>明确周期</span>
+              <span className="process-tag border border-rose-200 bg-rose-50/60 text-rose-700"><i className="fas fa-file-contract text-rose-500 text-[10px] mr-1"></i>无隐藏费</span>
             </div>
           </div>
           <div className="hidden md:block absolute top-20 left-full w-[calc(100%-30px)] h-0.5 bg-gradient-to-r from-red-200 to-gray-200 -z-10"></div>
@@ -76,9 +76,9 @@
           </p>
           <div className="mt-5 pt-4 border-t border-gray-100 w-full">
             <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
-              <span className="flex items-center gap-1"><i className="fas fa-check-double text-red-400"></i> 免费修改</span>
-              <span className="flex items-center gap-1"><i className="fas fa-book-open text-red-400"></i> 使用文档</span>
-              <span className="flex items-center gap-1"><i className="fas fa-headset text-red-400"></i> 售后指导</span>
+              <span className="process-tag border border-teal-200 bg-teal-50/60 text-teal-700"><i className="fas fa-check-double text-teal-500 text-[10px] mr-1"></i>免费修改</span>
+              <span className="process-tag border border-indigo-200 bg-indigo-50/60 text-indigo-700"><i className="fas fa-book-open text-indigo-500 text-[10px] mr-1"></i>使用文档</span>
+              <span className="process-tag border border-cyan-200 bg-cyan-50/60 text-cyan-700"><i className="fas fa-headset text-cyan-500 text-[10px] mr-1"></i>售后指导</span>
             </div>
           </div>
         </div>
@@ -98,5 +98,6 @@
 };
 
 export default Workflow;
+
 
 

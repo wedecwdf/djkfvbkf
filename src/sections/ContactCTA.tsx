@@ -79,9 +79,9 @@
       {/* 底部微型装饰 */}
       <div className="flex justify-center mt-10">
         <div className="flex items-center gap-6 text-xs text-gray-400">
-          <span className="flex items-center gap-1"><i className="fas fa-check-circle text-green-500"></i> 100%可运行</span>
-          <span className="flex items-center gap-1"><i className="fas fa-file-invoice"></i> 支持对公转账</span>
-          <span className="flex items-center gap-1"><i className="fas fa-headset"></i> 售后无忧</span>
+          <span className="trust-badge border border-emerald-200 bg-emerald-50/40 text-emerald-700"><i className="fas fa-check-circle text-emerald-500 mr-1"></i>100%可运行</span>
+          <span className="trust-badge border border-slate-300 bg-slate-50/60 text-slate-700"><i className="fas fa-file-invoice text-slate-500 mr-1"></i>支持对公转账</span>
+          <span className="trust-badge border border-amber-200 bg-amber-50/40 text-amber-700"><i className="fas fa-headset text-amber-500 mr-1"></i>售后无忧</span>
         </div>
       </div>
     </section>
@@ -89,5 +89,6 @@
 };
 
 export default ContactCTA;
+
 
 

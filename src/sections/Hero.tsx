@@ -116,8 +116,8 @@ const Hero = () => {
           </div>
           <div className="flex items-center gap-6 mt-8 text-sm text-gray-500">
             <div className="flex items-center gap-1"><i className="fas fa-shield-alt text-red-600"></i> 保密协议</div>
-            <div className="flex items-center gap-1"><i className="fas fa-sync-alt text-blue-600"></i> 7天免费修改</div>
-            <div className="flex items-center gap-1"><i className="fas fa-clock text-orange-500"></i> 24h交付(加急)</div>
+            <div className="trust-badge border border-blue-200 bg-blue-50/40 text-blue-700"><i className="fas fa-sync-alt text-blue-600 mr-1"></i>7天免费修改</div>
+            <div className="trust-badge border border-orange-200 bg-orange-50/40 text-orange-700"><i className="fas fa-clock text-orange-500 mr-1"></i>24h交付(加急)</div>
           </div>
         </div>
 
@@ -232,6 +232,7 @@ const Hero = () => {
 };
 
 export default Hero;
+
 
 
 
