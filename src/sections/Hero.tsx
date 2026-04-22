@@ -85,7 +85,6 @@ const Hero = () => {
   return (
     <section id="hero" className="pt-24 pb-10 px-6 max-w-7xl mx-auto">
       <div className="grid lg:grid-cols-2 gap-10 items-center">
-        {/* 左侧内容不变 */}
         <div className="animate__animated animate__fadeInLeft">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-red-50 to-amber-50 rounded-full mb-6 border border-red-200">
             <span className="relative flex h-3 w-3">
@@ -114,14 +113,19 @@ const Hero = () => {
               <i className="fas fa-calculator"></i> 免费获取估价
             </button>
           </div>
-          <div className="flex items-center gap-6 mt-8 text-sm text-gray-500">
-            <div className="flex items-center gap-1"><i className="fas fa-shield-alt text-red-600"></i> 保密协议</div>
-            <div className="trust-badge border border-blue-200 bg-blue-50/40 text-blue-700"><i className="fas fa-sync-alt text-blue-600 mr-1"></i>7天免费修改</div>
-            <div className="trust-badge border border-orange-200 bg-orange-50/40 text-orange-700"><i className="fas fa-clock text-orange-500 mr-1"></i>24h交付(加急)</div>
+          <div className="flex items-center gap-6 mt-8 text-sm">
+            {/* 美化后的标签 */}
+            <span className="trust-badge border border-green-200 bg-green-50/40 text-green-700">
+              <i className="fas fa-shield-alt text-green-600 mr-1"></i>保密协议
+            </span>
+            <span className="trust-badge border border-blue-200 bg-blue-50/40 text-blue-700">
+              <i className="fas fa-sync-alt text-blue-600 mr-1"></i>7天免费修改
+            </span>
+            <span className="trust-badge border border-orange-200 bg-orange-50/40 text-orange-700">
+              <i className="fas fa-clock text-orange-500 mr-1"></i>24h交付(加急)
+            </span>
           </div>
         </div>
-
-        {/* 右侧动态轮播卡片（新增评论） */}
         <div className="animate__animated animate__fadeInRight">
           <div 
             ref={containerRef}
@@ -163,7 +167,6 @@ const Hero = () => {
                   </div>
                 </div>
                 
-                {/* 评论气泡 */}
                 <div className="mt-4 bg-red-50/80 rounded-2xl rounded-bl-md p-4">
                   <div className="flex items-start gap-2">
                     <i className="fas fa-quote-left text-red-300 text-xs mt-0.5"></i>
@@ -232,7 +235,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
-
-
-
