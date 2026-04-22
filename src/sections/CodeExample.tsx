@@ -85,7 +85,7 @@ const CodeExample = () => {
                   {"        "}exp2 = df[<span className="text-[#98c379]">'close'</span>].ewm(span=<span className="text-[#c678dd]">self</span>.slow).mean(){"\n"}
                   {"        "}df[<span className="text-[#98c379]">'macd'</span>] = exp1 - exp2{"\n"}
                   {"        "}df[<span className="text-[#98c379]">'signal_line'</span>] = df[<span className="text-[#98c379]">'macd'</span>].ewm(span=<span className="text-[#c678dd]">self</span>.signal).mean(){"\n"}
-                  {"        "}df[<span className="text-[#98c379]">'position'</span>] = np.where(df[<span className="text-[#98c379]">'macd'</span>] > df[<span className="text-[#98c379]">'signal_line'</span>], <span className="text-[#d19a66]">1</span>, -<span className="text-[#d19a66]">1</span>){"\n"}
+                  {"        "}df[<span className="text-[#98c379]">'position'</span>] = np.where(df[<span className="text-[#98c379]">'macd'</span>] &gt; df[<span className="text-[#98c379]">'signal_line'</span>], <span className="text-[#d19a66]">1</span>, -<span className="text-[#d19a66]">1</span>){"\n"}
                   {"        "}<span className="text-[#c678dd]">return</span> df{"\n"}
                 </pre>
               ) : (
