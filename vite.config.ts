@@ -22,21 +22,5 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 800,
     minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
-  },
-  server: {
-    headers: {
-      'Cache-Control': 'public, max-age=31536000',
-    },
-  },
-  preview: {
-    headers: {
-      'Cache-Control': 'public, max-age=31536000',
-    },
   },
 });
