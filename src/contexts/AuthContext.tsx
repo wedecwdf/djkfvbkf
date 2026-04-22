@@ -6,7 +6,7 @@ type AuthContextType = {
   user: User | null
   session: Session | null
   loading: boolean
-  signUp: (email: string, password: string, username?: string) => Promise<{ error: any }>
+  signUp: (email: string, password: string) => Promise<{ error: any }>
   signIn: (email: string, password: string) => Promise<{ error: any }>
   signOut: () => Promise<void>
 }
@@ -33,13 +33,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => listener?.subscription.unsubscribe()
   }, [])
 
-  const signUp = async (email: string, password: string, username?: string) => {
+  const signUp = async (email: string, password: string) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: { full_name: username }
-      }
+      options: {}
     })
     return { error }
   }
@@ -63,4 +61,7 @@ export const useAuth = () => {
   if (!context) throw new Error('useAuth must be used within AuthProvider')
   return context
 }
+
+
+
 

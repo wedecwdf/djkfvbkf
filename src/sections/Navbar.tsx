@@ -10,22 +10,18 @@ const Navbar = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const { signUp, signIn } = useAuth();
 
-  // 处理导航：如果在首页则滚动，否则跳转首页后再滚动
   const handleNavClick = (sectionId: string) => {
     if (location.pathname === "/") {
-      // 已在首页，直接滚动
       const element = document.getElementById(sectionId);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
     } else {
-      // 不在首页，跳转首页并携带要滚动到的区块
       navigate(`/?scrollTo=${sectionId}`);
     }
   };
@@ -38,7 +34,7 @@ const Navbar = () => {
     if (isLogin) {
       result = await signIn(email, password);
     } else {
-      result = await signUp(email, password, username);
+      result = await signUp(email, password);
     }
     setLoading(false);
     if (result.error) {
@@ -46,7 +42,7 @@ const Navbar = () => {
     } else {
       setShowAuthModal(false);
       if (!isLogin) {
-        alert("注册成功！请查收邮箱验证（如开启）。");
+        alert("注册成功！请查收邮箱验证邮件，点击链接完成验证。");
       }
     }
   };
@@ -116,17 +112,6 @@ const Navbar = () => {
           <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl">
             <h2 className="text-2xl font-bold mb-4">{isLogin ? "登录" : "注册"}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-              {!isLogin && (
-                <div>
-                  <label className="block text-sm font-medium mb-1">用户名（可选）</label>
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
-                  />
-                </div>
-              )}
               <div>
                 <label className="block text-sm font-medium mb-1">邮箱</label>
                 <input
