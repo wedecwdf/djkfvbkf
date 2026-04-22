@@ -59,7 +59,7 @@ class MACDStrategy:
     .replace(/\b(map|ewm|mean|filter)\b/g, match => `<span class="text-[#61afef]">${match}</span>`);
 
   return (
-    <section id="examples" className="py-16 px-6 max-w-7xl mx-auto">
+    <section id="examples" className="py-12 px-6 max-w-7xl mx-auto">
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         <div>
           <span className="inline-flex items-center gap-2 text-red-600 font-semibold text-sm uppercase tracking-wider mb-3">
@@ -153,3 +153,4 @@ class MACDStrategy:
 };
 
 export default CodeExample;
+

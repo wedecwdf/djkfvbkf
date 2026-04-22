@@ -1,6 +1,6 @@
 ﻿const ContactCTA = () => {
   return (
-    <section id="contact" className="py-16 px-6 max-w-6xl mx-auto">
+    <section id="contact" className="py-12 px-6 max-w-6xl mx-auto">
       <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
         {/* 左侧：核心价值 + 信任徽章 */}
         <div className="flex-1 text-center lg:text-left">
@@ -89,3 +89,4 @@
 };
 
 export default ContactCTA;
+

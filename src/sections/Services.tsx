@@ -1,6 +1,6 @@
 ﻿const Services = () => {
   return (
-    <section id="services" className="py-16 px-6 max-w-7xl mx-auto">
+    <section id="services" className="py-12 px-6 max-w-7xl mx-auto">
       {/* 区块标题 */}
       <div className="mb-12 text-center md:text-left">
         <span className="text-red-600 font-semibold text-sm uppercase tracking-wider bg-red-50 px-3 py-1 rounded-full">
@@ -167,3 +167,4 @@
 };
 
 export default Services;
+
