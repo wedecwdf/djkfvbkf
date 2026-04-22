@@ -116,7 +116,7 @@ export default function Profile() {
     if (error) {
       alert("提交失败：" + error.message);
     } else {
-      alert("策略需求已提交！我们将在24小时内评估并联系您。");
+      alert("需求已提交！我们将在24小时内评估并联系您。");
       form.reset();
       fetchOrders();
     }
@@ -124,7 +124,6 @@ export default function Profile() {
 
   // 生成并下载运行脚本 (.bat)
   const downloadRunScript = (resource: FreeResource) => {
-    // 从 file_url 中提取文件名
     const urlParts = resource.file_url.split('/');
     const fileName = urlParts[urlParts.length - 1] || 'strategy.py';
     const scriptContent = `@echo off
@@ -161,7 +160,7 @@ pause
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 md:py-12 pt-28 md:pt-32">
-      {/* 欢迎头部 (保持原有) */}
+      {/* 欢迎头部 */}
       <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
@@ -186,7 +185,7 @@ pause
         </div>
       </div>
 
-      {/* 快速提示卡片 (保持原有) */}
+      {/* 快速提示卡片 */}
       <div className="bg-gradient-to-r from-red-50 to-amber-50 border border-red-200 rounded-2xl p-5 mb-8 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shadow-md">
@@ -204,76 +203,102 @@ pause
 
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          {/* 快速提交策略需求 (保持原有) */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <i className="fas fa-pen-fancy text-red-600"></i>
-              <h2 className="text-lg font-bold text-gray-800">快速提交策略需求</h2>
-            </div>
-            <p className="text-gray-500 text-sm mb-5">只需填写以下信息，我们将在24小时内评估并报价。</p>
-            
-            <form onSubmit={handleSubmitStrategy} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">策略名称（可选）</label>
-                <input
-                  type="text"
-                  name="title"
-                  placeholder="例如：双均线突破策略"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
-                />
+          {/* 美化后的新建策略需求卡片 */}
+          <div className="form-card bg-white/85 backdrop-blur-sm rounded-2xl shadow-sm border border-red-100/50 p-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-md shadow-red-200">
+                <i className="fas fa-pen-fancy text-white text-lg"></i>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  策略描述 <span className="text-red-500">*</span>
-                </label>
+                <h2 className="text-xl font-bold text-gray-800">新建策略需求</h2>
+                <p className="text-gray-500 text-xs mt-0.5">用自然语言描述，我们转化为精准代码</p>
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmitStrategy} className="space-y-5">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-semibold text-gray-700">
+                    <i className="fas fa-comment-dots mr-2 text-red-500"></i>策略描述 <span className="text-red-500">*</span>
+                  </label>
+                  <span className="text-xs text-gray-400 flex items-center gap-1">
+                    <i className="fas fa-lightbulb text-amber-400"></i> 越详细越好
+                  </span>
+                </div>
                 <textarea
                   name="description"
-                  rows={3}
+                  rows={4}
                   required
-                  placeholder="请用简单的话描述您的交易想法……&#10;例如：当5日均线上穿20日均线时买入，下穿时卖出。只交易沪深300成分股。"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition"
+                  placeholder="例如：当5日均线上穿20日均线时买入，下穿时卖出。只交易沪深300成分股，每次固定仓位10%，止损5%。"
+                  className="w-full px-5 py-4 rounded-2xl border border-gray-200 bg-white/70 backdrop-blur-sm text-gray-700 placeholder-gray-400 focus:border-red-500 focus:ring-4 focus:ring-red-100 transition resize-none"
                 ></textarea>
+                <p className="mt-2 text-xs text-gray-400 flex items-center gap-1">
+                  <i className="fas fa-info-circle"></i> 支持文字、图表链接、语音转文字 — 我们会精确还原逻辑
+                </p>
               </div>
-              <div className="grid sm:grid-cols-2 gap-4">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">期望编程语言</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <i className="fab fa-python mr-2 text-blue-600"></i>期望编程语言
+                  </label>
                   <select
                     name="language"
-                    defaultValue="Python"
-                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 bg-white focus:ring-2 focus:ring-red-500 outline-none"
+                    defaultValue="Python (推荐)"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-sm text-gray-700 focus:border-red-500 focus:ring-4 focus:ring-red-100 transition cursor-pointer"
                   >
                     <option>Python (推荐)</option>
                     <option>JavaScript</option>
-                    <option>MQL4/MQL5</option>
+                    <option>MQL4 / MQL5</option>
                     <option>其他</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">回测框架（可选）</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <i className="fas fa-chart-bar mr-2 text-green-600"></i>回测框架（可选）
+                  </label>
                   <select
                     name="framework"
-                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 bg-white focus:ring-2 focus:ring-red-500 outline-none"
+                    defaultValue="不限"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-sm text-gray-700 focus:border-red-500 focus:ring-4 focus:ring-red-100 transition cursor-pointer"
                   >
                     <option>不限</option>
                     <option>Backtrader</option>
                     <option>Zipline</option>
                     <option>VectorBT</option>
+                    <option>MT5 自带</option>
                     <option>其他</option>
                   </select>
                 </div>
               </div>
-              <div className="flex justify-end pt-2">
+
+              <div className="pt-2">
                 <button
                   type="submit"
-                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl font-medium shadow-md shadow-red-200 transition flex items-center gap-2"
+                  className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-red-200 transition flex items-center justify-center gap-3 text-base"
                 >
-                  提交需求 <i className="fas fa-paper-plane"></i>
+                  <i className="fas fa-paper-plane"></i> 提交需求 · 免费获取评估
                 </button>
+                <p className="text-center text-xs text-gray-400 mt-3 flex items-center justify-center gap-2">
+                  <i className="fas fa-shield-alt text-green-500"></i> 代码编写完全免费 · 仅部署与维护收费
+                  <span className="mx-1">•</span>
+                  <i className="fas fa-lock"></i> 严格保密
+                </p>
               </div>
             </form>
+
+            <div className="mt-5 pt-4 border-t border-gray-200/70">
+              <p className="text-sm text-gray-500 flex items-center gap-2">
+                <i className="fas fa-book-open text-red-400"></i>
+                <span>不知道怎么写？试试我们的</span>
+                <a href="#" className="text-red-600 font-medium hover:underline inline-flex items-center gap-1">
+                  策略模板库 <i className="fas fa-arrow-right text-xs"></i>
+                </a>
+              </p>
+            </div>
           </div>
 
-          {/* 我的策略订单 (保持原有) */}
+          {/* 我的策略订单 (保持不变) */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
@@ -353,7 +378,7 @@ pause
             </div>
           </div>
 
-          {/* 免费策略资源板块 (新增运行按钮) */}
+          {/* 免费策略资源 (保持不变) */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-4">
               <i className="fas fa-gift text-red-600"></i>
@@ -370,20 +395,27 @@ pause
                       <p className="text-xs text-gray-500">{r.description || "点击下载或运行"}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      {/* 下载按钮 */}
-                      <a href={r.file_url} target="_blank" rel="noopener noreferrer" className="text-white bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded-lg text-xs font-medium transition shadow-sm" title="下载源代码">下载</a>
-                      {/* 运行按钮 - 下载批处理脚本 */}
-                      <button onClick={() => downloadRunScript(r)} className="text-white bg-green-600 hover:bg-green-700 px-3 py-1.5 rounded-lg text-xs font-medium transition shadow-sm" title="下载运行脚本 (.bat)，双击即可运行 (需安装Python)">运行</button>
+                      <a
+                        href={r.file_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-600 hover:text-red-700 text-sm font-medium bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition"
+                        title="下载源代码"
+                      >
+                        <i className="fas fa-download"></i>
+                      </a>
+                      <button
+                        onClick={() => downloadRunScript(r)}
+                        className="text-green-600 hover:text-green-700 text-sm font-medium bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition"
+                        title="下载运行脚本 (.bat)，双击即可运行 (需安装Python)"
+                      >
+                        <i className="fas fa-play"></i>
+                      </button>
                     </div>
                   </div>
                 ))
               )}
             </div>
-            {resources.length > 5 && (
-              <a href="#" className="mt-4 text-sm text-red-600 font-medium hover:underline flex items-center gap-1">
-                查看更多资源 <i className="fas fa-arrow-right text-xs"></i>
-              </a>
-            )}
             <p className="text-xs text-gray-400 mt-4 flex items-center gap-1">
               <i className="fas fa-info-circle"></i> 
               点击 <i className="fas fa-play text-green-600"></i> 将下载 .bat 脚本，双击即可自动运行对应 Python 代码（需安装 Python）。
@@ -391,7 +423,7 @@ pause
           </div>
         </div>
 
-        {/* 右侧边栏 (保持原有) */}
+        {/* 右侧边栏 (保持不变) */}
         <div className="space-y-6">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 text-center">
             <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-full mx-auto flex items-center justify-center shadow-md mb-3">
@@ -481,12 +513,9 @@ pause
                 <p className="text-gray-500 text-sm text-center py-4">暂无交付文件</p>
               )}
             </div>
-            <a href="#" className="mt-4 text-sm text-red-600 font-medium hover:underline flex items-center gap-1">
-              查看所有文件 <i className="fas fa-arrow-right text-xs"></i>
-            </a>
           </div>
 
-          {/* 帮助卡片 (保持原有) */}
+          {/* 帮助卡片 */}
           <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-5 text-white">
             <i className="fas fa-headset text-2xl mb-3"></i>
             <h4 className="font-bold mb-1">需要帮助？</h4>
@@ -533,5 +562,3 @@ pause
     </div>
   );
 }
-
-
