@@ -17,9 +17,8 @@ const Navbar = () => {
   // 注册流程状态
   const [step, setStep] = useState<"email" | "code" | "password">("email");
   const [code, setCode] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
   const [countdown, setCountdown] = useState(0);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<number | null>(null);
 
   const { signIn } = useAuth();
 
@@ -37,7 +36,7 @@ const Navbar = () => {
   const startCountdown = () => {
     setCountdown(60);
     if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
+    timerRef.current = window.setInterval(() => {
       setCountdown(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current!);
@@ -63,7 +62,6 @@ const Navbar = () => {
     if (error) {
       setError(error.message);
     } else {
-      setOtpSent(true);
       setStep("code");
       startCountdown();
     }
@@ -76,7 +74,7 @@ const Navbar = () => {
     }
     setError("");
     setLoading(true);
-    const { data, error } = await supabase.auth.verifyOtp({
+    const { error } = await supabase.auth.verifyOtp({
       email,
       token: code,
       type: "email",
@@ -85,7 +83,6 @@ const Navbar = () => {
     if (error) {
       setError(error.message);
     } else {
-      // 验证成功，进入设置密码步骤
       setStep("password");
     }
   };
@@ -97,7 +94,6 @@ const Navbar = () => {
     }
     setError("");
     setLoading(true);
-    // 更新当前用户的密码（此时用户已通过验证码登录）
     const { error } = await supabase.auth.updateUser({ password });
     setLoading(false);
     if (error) {
@@ -127,7 +123,6 @@ const Navbar = () => {
     setEmail("");
     setPassword("");
     setCode("");
-    setOtpSent(false);
     setError("");
     setCountdown(0);
     if (timerRef.current) clearInterval(timerRef.current);
