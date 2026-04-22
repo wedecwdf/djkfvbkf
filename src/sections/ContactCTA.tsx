@@ -19,7 +19,6 @@
             </span>
           </p>
 
-          {/* 信任标识组 */}
           <div className="flex flex-wrap items-center gap-4 justify-center lg:justify-start">
             <div className="flex items-center gap-1.5 bg-gray-50 px-4 py-2 rounded-full border border-gray-200">
               <i className="fas fa-shield-alt text-green-600"></i>
@@ -39,7 +38,7 @@
         {/* 右侧：联系信息 + 行动按钮 (无背景卡片) */}
         <div className="flex-1 w-full max-w-md">
           <div className="space-y-5">
-            {/* 微信联系 */}
+            {/* 微信联系 — 确保图标存在 */}
             <div className="flex items-center gap-4 p-4 bg-gray-50/50 rounded-xl border border-gray-200/60 hover:bg-gray-50 transition cursor-pointer group">
               <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-105 transition">
                 <i className="fab fa-weixin text-white text-2xl"></i>
@@ -51,7 +50,7 @@
               <i className="fas fa-chevron-right text-gray-400 group-hover:translate-x-1 transition"></i>
             </div>
 
-            {/* 邮箱联系 */}
+            {/* 邮箱联系 — 确保图标存在 */}
             <div className="flex items-center gap-4 p-4 bg-gray-50/50 rounded-xl border border-gray-200/60 hover:bg-gray-50 transition cursor-pointer group">
               <div className="w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-105 transition">
                 <i className="far fa-envelope text-white text-2xl"></i>
@@ -64,7 +63,6 @@
             </div>
           </div>
 
-          {/* 行动按钮 */}
           <div className="mt-8">
             <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-xl shadow-md shadow-red-200 transition flex items-center justify-center gap-3 text-base">
               <i className="fas fa-paper-plane"></i> 立即提交需求 · 免费获取评估
@@ -79,9 +77,9 @@
       {/* 底部微型装饰 */}
       <div className="flex justify-center mt-10">
         <div className="flex items-center gap-6 text-xs text-gray-400">
-          <span className="trust-badge border border-emerald-200 bg-emerald-50/40 text-emerald-700"><i className="fas fa-check-circle text-emerald-500 mr-1"></i>100%可运行</span>
-          <span className="trust-badge border border-slate-300 bg-slate-50/60 text-slate-700"><i className="fas fa-file-invoice text-slate-500 mr-1"></i>支持对公转账</span>
-          <span className="trust-badge border border-amber-200 bg-amber-50/40 text-amber-700"><i className="fas fa-headset text-amber-500 mr-1"></i>售后无忧</span>
+          <span className="flex items-center gap-1"><i className="fas fa-check-circle text-green-500"></i> 100%可运行</span>
+          <span className="flex items-center gap-1"><i className="fas fa-file-invoice"></i> 支持对公转账</span>
+          <span className="flex items-center gap-1"><i className="fas fa-headset"></i> 售后无忧</span>
         </div>
       </div>
     </section>
@@ -89,6 +87,3 @@
 };
 
 export default ContactCTA;
-
-
-
