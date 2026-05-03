@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>量化交易系统 · 项目树</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --folder: #d97706;
+            --file: #2563eb;
+            --hover: #f1f5f9;
+            --line: #cbd5e1;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 100%);
+            font-family: 'Inter', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 860px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            padding: 2rem 1.8rem 2.2rem;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.8rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-icon {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .header-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+
+        .header-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0.2rem 0 0;
+        }
+
+        /* ---------- 树形结构 ---------- */
+        .tree {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tree ul {
+            list-style: none;
+            padding-left: 1.6rem;
+            margin: 0.15rem 0 0.15rem 0.4rem;
+            border-left: 1px dashed var(--line);
+        }
+
+        .tree li {
+            position: relative;
+            padding-left: 0.2rem;
+            margin: 0.15rem 0;
+        }
+
+        /* 文件夹折叠区块 */
+        .folder-block {
+            display: block;
+        }
+
+        .folder-block > summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.25rem 0.4rem;
+            border-radius: 6px;
+            transition: background 0.15s;
+            font-weight: 500;
+            color: var(--text);
+            user-select: none;
+        }
+
+        .folder-block > summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .folder-block > summary:hover {
+            background: var(--hover);
+        }
+
+        /* 文件夹图标 */
+        .icon {
+            font-size: 1rem;
+            width: 1.2rem;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .icon-folder {
+            color: var(--folder);
+        }
+
+        .icon-file {
+            color: var(--file);
+        }
+
+        .folder-name {
+            white-space: nowrap;
+        }
+
+        /* 文件行 */
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 6px;
+            transition: background 0.15s;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .file-item:hover {
+            background: var(--hover);
+        }
+
+        .file-name {
+            white-space: nowrap;
+        }
+
+        /* 折叠/展开指示器 (三角形) */
+        .folder-block > summary::before {
+            content: '▸';
+            font-size: 0.7rem;
+            margin-right: 0.1rem;
+            transition: transform 0.15s;
+            display: inline-block;
+            width: 0.9rem;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .folder-block[open] > summary::before {
+            transform: rotate(90deg);
+        }
+
+        /* 根节点样式 */
+        .tree > .root-folder {
+            margin-left: 0;
+        }
+
+        .tree > .root-folder > ul {
+            border-left: 1px dashed var(--line);
+            margin-left: 0.6rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+            .tree {
+                font-size: 0.82rem;
+            }
+            .tree ul {
+                padding-left: 1.2rem;
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="header-icon">📊</span>
+            <div class="header-text">
+                <h1>量化交易系统</h1>
+                <p>基于掘金量化 (GM) 的多策略实盘/模拟盘框架</p>
+            </div>
+        </div>
+
+        <!-- 树形目录结构 (使用 details/summary 实现折叠) -->
+        <ul class="tree">
+            <!-- 根节点：量化交易系统 -->
+            <li>
+                <details class="folder-block root-folder" open>
+                    <summary>
+                        <span class="icon icon-folder">📁</span>
+                        <span class="folder-name">量化交易系统</span>
+                    </summary>
+                    <ul>
+                        <!-- adapter/ -->
+                        <li>
+                            <details class="folder-block" open>
+                                <summary>
+                                    <span class="icon icon-folder">📁</span>
+                                    <span class="folder-name">adapter</span>
+                                </summary>
+                                <ul>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">context_wrapper.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">event_handler.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">gm_adapter.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">main.py</span></li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <!-- config/ -->
+                        <li>
+                            <details class="folder-block" open>
+                                <summary>
+                                    <span class="icon icon-folder">📁</span>
+                                    <span class="folder-name">config</span>
+                                </summary>
+                                <ul>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">account.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">calendar.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">logging_config.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">mail.py</span></li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">strategy</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">config_objects.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">indicators.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <!-- domain/ -->
+                        <li>
+                            <details class="folder-block" open>
+                                <summary>
+                                    <span class="icon icon-folder">📁</span>
+                                    <span class="folder-name">domain</span>
+                                </summary>
+                                <ul>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">base_price.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">board.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">constants.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">day_data.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">decisions.py</span></li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">conditions</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">board.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">board_mechanisms.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">condition2.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">condition8_grid.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">condition9.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">ma.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">next_day_stop_loss.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">pyramid_add.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">pyramid_profit.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">registry.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">contexts</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">base.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">board.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">condition2.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">condition4_7.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">condition8.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">condition9.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">next_day.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">pyramid.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">tick_context.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">stores</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">base.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">context_store.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">order_interfaces.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <!-- repository/ -->
+                        <li>
+                            <details class="folder-block" open>
+                                <summary>
+                                    <span class="icon icon-folder">📁</span>
+                                    <span class="folder-name">repository</span>
+                                </summary>
+                                <ul>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">mail_sender.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">state_gateway.py</span></li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">core</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">file_path.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">json_util.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">serializer.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">state_gateway_impl.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">persistence</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">file_persistence.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">stores</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">board_state_repo_impl.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">callback_task_store_impl.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">order_ledger_impl.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">session_registry_impl.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <!-- scripts/ -->
+                        <li>
+                            <details class="folder-block" open>
+                                <summary>
+                                    <span class="icon icon-folder">📁</span>
+                                    <span class="folder-name">scripts</span>
+                                </summary>
+                                <ul>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">clear_all.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">export_log.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">rollback_state.py</span></li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <!-- service/ -->
+                        <li>
+                            <details class="folder-block" open>
+                                <summary>
+                                    <span class="icon icon-folder">📁</span>
+                                    <span class="folder-name">service</span>
+                                </summary>
+                                <ul>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">board_service.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">condition_service.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">day_adjust_service.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">dynamic_profit_recheck_service.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">indicator_service.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">order_cancel_service.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">order_executor.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">pyramid_service.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">tick_data_service.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">trade_engine.py</span></li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">board</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">break_service.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">counting_service.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">dynamic_profit_service.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">state_machine.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">conditions</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond2.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond4.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond5.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond6.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond7.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond8.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond8_buy_handler.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond8_execution.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond8_quantity_calculator.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond8_result_assembler.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond8_sell_handler.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond8_validation.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">cond9.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">pyramid_profit.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">utils.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">execution</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <!-- tests/ -->
+                        <li>
+                            <details class="folder-block" open>
+                                <summary>
+                                    <span class="icon icon-folder">📁</span>
+                                    <span class="folder-name">tests</span>
+                                </summary>
+                                <ul>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">integration</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">test_tick_replay.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                    <li>
+                                        <details class="folder-block" open>
+                                            <summary>
+                                                <span class="icon icon-folder">📁</span>
+                                                <span class="folder-name">unit</span>
+                                            </summary>
+                                            <ul>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">test_board_service.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">test_condition_service.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">test_pyramid_service.py</span></li>
+                                                <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">test_trade_engine.py</span></li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <!-- use_case/ -->
+                        <li>
+                            <details class="folder-block" open>
+                                <summary>
+                                    <span class="icon icon-folder">📁</span>
+                                    <span class="folder-name">use_case</span>
+                                </summary>
+                                <ul>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">handle_close.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">handle_tick.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">health_check.py</span></li>
+                                    <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">init_assets.py</span></li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <!-- 根目录文件 -->
+                        <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">__init__.py</span></li>
+                        <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">.env</span></li>
+                        <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">requirements.txt</span></li>
+                        <li class="file-item"><span class="icon icon-file">📄</span><span class="file-name">run_tests.py</span></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
