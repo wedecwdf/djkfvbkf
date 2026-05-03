@@ -5,7 +5,6 @@ interface Article {
   id: string;
   title: string;
   excerpt: string;
-  cover_url: string;
   published_at: string;
 }
 
@@ -16,10 +15,10 @@ export default function LatestArticles() {
   useEffect(() => {
     supabase
       .from("articles")
-      .select("id, title, excerpt, cover_url, published_at")
+      .select("id, title, excerpt, published_at")
       .eq("status", "published")
       .order("published_at", { ascending: false })
-      .limit(3)
+      .limit(5)
       .then(({ data }) => {
         if (data) setArticles(data);
         setLoading(false);
@@ -29,33 +28,42 @@ export default function LatestArticles() {
   if (loading || articles.length === 0) return null;
 
   return (
-    <section className="py-12 px-6 max-w-7xl mx-auto">
+    <section className="py-12 px-6 max-w-3xl mx-auto">
       <div className="mb-8">
-        <span className="text-red-600 font-semibold text-sm uppercase tracking-wider">最新动态</span>
-        <h2 className="text-3xl md:text-4xl font-bold mt-2">策略心得与行业洞察</h2>
+        <div className="flex items-center gap-3 mb-2">
+          <span className="w-6 h-6 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-xs">
+            <i className="fas fa-bolt"></i>
+          </span>
+          <span className="text-red-600 font-semibold text-sm uppercase tracking-wider">最新动态</span>
+        </div>
+        <h2 className="text-3xl text-gray-800">策略心得与行业洞察</h2>
+        <p className="text-gray-500 text-sm mt-1">分享量化交易知识，提升策略思维</p>
       </div>
-      <div className="grid md:grid-cols-3 gap-6">
+
+      <div className="space-y-6">
         {articles.map((article) => (
-          <a
-            key={article.id}
-            href={`/article.html?id=${article.id}`}
-            className="group bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition"
-          >
-            {article.cover_url && (
-              <img src={article.cover_url} alt={article.title} className="w-full h-40 object-cover" />
-            )}
-            <div className="p-5">
-              <h3 className="font-bold text-gray-800 group-hover:text-red-600 transition mb-2 line-clamp-2">
+          <div key={article.id} className="timeline-item">
+            <span className="text-xs text-gray-400 block mb-1">
+              <i className="far fa-calendar mr-1"></i>
+              {new Date(article.published_at).toLocaleDateString()}
+            </span>
+            <a href={`/article.html?id=${article.id}`} className="article-link group block">
+              <h3 className="text-lg text-gray-800 group-hover:text-red-600 transition-colors mb-1 line-clamp-1">
                 {article.title}
               </h3>
-              <p className="text-sm text-gray-500 line-clamp-3">{article.excerpt}</p>
-              <p className="text-xs text-gray-400 mt-4">
-                {new Date(article.published_at).toLocaleDateString()}
-              </p>
-            </div>
-          </a>
+              <p className="text-sm text-gray-500 line-clamp-2">{article.excerpt}</p>
+            </a>
+          </div>
         ))}
       </div>
+
+      {articles.length >= 5 && (
+        <div className="mt-8 text-center">
+          <a href="#" className="inline-flex items-center gap-2 text-red-600 text-sm hover:text-red-700 transition">
+            查看更多文章 <i className="fas fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+      )}
     </section>
   );
 }
