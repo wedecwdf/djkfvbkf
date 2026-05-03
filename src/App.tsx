@@ -10,6 +10,7 @@ import Profile from "./sections/Profile";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
+import LatestArticles from "./components/LatestArticles";
 
 function HomePage() {
   return (
@@ -17,6 +18,7 @@ function HomePage() {
       <Navbar />
       <Hero />
       <Services />
+      <LatestArticles />
       <Workflow />
       <CodeExample />
       <ContactCTA />
