@@ -31,6 +31,7 @@
               <li><a href="#workflow" className="footer-link inline-flex items-center gap-1 text-gray-500 hover:text-red-600 text-sm"><i className="fas fa-angle-right text-red-400 text-xs"></i>合作流程</a></li>
               <li><a href="#examples" className="footer-link inline-flex items-center gap-1 text-gray-500 hover:text-red-600 text-sm"><i className="fas fa-angle-right text-red-400 text-xs"></i>代码示例</a></li>
               <li><a href="#contact" className="footer-link inline-flex items-center gap-1 text-gray-500 hover:text-red-600 text-sm"><i className="fas fa-angle-right text-red-400 text-xs"></i>联系我们</a></li>
+              <li><a href="/quant-tree.html" target="_blank" className="footer-link inline-flex items-center gap-1 text-gray-500 hover:text-red-600 text-sm"><i className="fas fa-angle-right text-red-400 text-xs"></i>📊 项目结构示例</a></li>
             </ul>
           </div>
 
@@ -88,3 +89,4 @@
 };
 
 export default Footer;
+
