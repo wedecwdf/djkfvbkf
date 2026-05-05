@@ -17,18 +17,18 @@ function HomePage() {
     <>
       <Navbar />
       <div className="max-w-[1400px] mx-auto flex gap-0 px-4">
-        {/* 左侧留白 */}
-        <aside className="hidden xl:block w-[12%] flex-shrink-0"></aside>
+        {/* 左侧留白 - lg 断点起显示 */}
+        <aside className="hidden lg:block w-[8%] flex-shrink-0"></aside>
         {/* 中间核心内容 */}
-        <main className="flex-1 min-w-0 xl:w-[60%] px-2">
+        <main className="flex-1 min-w-0 lg:w-[64%] px-2">
           <Hero />
           <Services />
           <Workflow />
           <CodeExample />
           <ContactCTA />
         </main>
-        {/* 右侧边栏 */}
-        <aside className="hidden xl:block w-[22%] flex-shrink-0 pl-4">
+        {/* 右侧边栏 - lg 断点起显示 */}
+        <aside className="hidden lg:block w-[22%] flex-shrink-0 pl-4">
           <RightSidebar />
         </aside>
       </div>

@@ -35,32 +35,29 @@ export default function RightSidebar() {
     <div className="space-y-5">
       {/* 最新文章卡片 */}
       <div className="bg-white rounded-2xl border border-gray-200/80 shadow-sm p-5">
-        {/* 标题区域 - 确保可见 */}
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-100">
           <span className="w-6 h-6 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-xs">
             <i className="fas fa-bolt"></i>
           </span>
-          <span className="text-sm font-bold text-red-600 uppercase tracking-wide">最新文章</span>
+          <span className="text-base font-bold text-gray-800">最新文章</span>
         </div>
-
-        <div className="space-y-1">
+        <div className="space-y-0.5">
           {articles.map((article) => (
             <a
               key={article.id}
               href={`/article.html?id=${article.id}`}
-              className="block py-2.5 border-b border-gray-100 last:border-0 hover:bg-red-50/50 rounded-lg px-2 -mx-2 transition group"
+              className="article-side-item flex flex-col py-2.5 group cursor-pointer"
             >
               <span className="text-[10px] text-gray-400">
                 {new Date(article.published_at).toLocaleDateString("zh-CN", { month: "2-digit", day: "2-digit" })}
               </span>
-              <h4 className="text-sm text-gray-700 group-hover:text-red-600 transition-colors mt-0.5 line-clamp-1">
+              <h4 className="text-sm text-gray-700 group-hover:text-red-600 transition mt-0.5 line-clamp-1">
                 {article.title}
               </h4>
               <p className="text-[11px] text-gray-400 mt-0.5 line-clamp-1">{article.excerpt}</p>
             </a>
           ))}
         </div>
-
         <a href="#" className="mt-3 text-xs text-red-500 font-medium hover:underline inline-flex items-center gap-1">
           阅读更多 <i className="fas fa-arrow-right text-[10px]"></i>
         </a>
@@ -68,20 +65,11 @@ export default function RightSidebar() {
 
       {/* 联系卡片 */}
       <div className="bg-white rounded-2xl border border-gray-200/80 shadow-sm p-5">
-        <h4 className="text-sm font-bold text-gray-800 mb-3">联系我们</h4>
-        <div className="space-y-3 text-sm text-gray-600">
-          <div className="flex items-center gap-2">
-            <i className="far fa-envelope text-red-500 w-4"></i>
-            <span>code@strategy.works</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <i className="fab fa-weixin text-green-500 w-4"></i>
-            <span>quant_code</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <i className="far fa-clock text-amber-500 w-4"></i>
-            <span>工作日 9:00 - 18:00</span>
-          </div>
+        <h4 className="text-base font-bold text-gray-800 mb-3 pb-3 border-b border-gray-100">联系我们</h4>
+        <div className="space-y-2.5 text-sm text-gray-600">
+          <div className="flex items-center gap-2"><i className="far fa-envelope text-red-500 w-4"></i>code@strategy.works</div>
+          <div className="flex items-center gap-2"><i className="fab fa-weixin text-green-500 w-4"></i>quant_code</div>
+          <div className="flex items-center gap-2"><i className="far fa-clock text-amber-500 w-4"></i>工作日 9:00-18:00</div>
         </div>
       </div>
     </div>
