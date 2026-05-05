@@ -78,7 +78,7 @@ const Navbar = () => {
               <i className="fas fa-code text-white text-sm"></i>
             </div>
             <span className="text-xl font-bold">
-              策略<span className="text-red-600">代码工坊</span>
+              量化<span className="text-red-600">实验室</span>
             </span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium">
@@ -214,5 +214,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 
 
