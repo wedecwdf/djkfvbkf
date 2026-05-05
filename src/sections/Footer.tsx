@@ -27,8 +27,8 @@
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center pt-6 text-xs text-gray-400">
-          <div className="flex flex-wrap gap-x-5 gap-y-2 justify-center md:justify-start"><span className="text-gray-500">© 2024 策略代码工坊</span><a href="#" className="hover:text-red-500 transition">隐私条款</a><a href="#" className="hover:text-red-500 transition">使用协议</a><span className="text-red-400">不提供投资建议</span></div>
-          <div className="flex items-center gap-5 mt-3 md:mt-0"><a href="/admin" className="text-gray-400 hover:text-red-500 transition text-[10px] tracking-wider uppercase">管理员</a><span className="text-gray-400">Made with <i className="fas fa-heart text-red-400 text-[10px] mx-0.5"></i> by 策略代码工坊</span></div>
+          <div className="flex flex-wrap gap-x-5 gap-y-2 justify-center md:justify-start"><span className="text-gray-500">© 2024 量化实验室</span><a href="#" className="hover:text-red-500 transition">隐私条款</a><a href="#" className="hover:text-red-500 transition">使用协议</a><span className="text-red-400">不提供投资建议</span></div>
+          <div className="flex items-center gap-5 mt-3 md:mt-0"><a href="/admin" className="text-gray-400 hover:text-red-500 transition text-[10px] tracking-wider uppercase">管理员</a><span className="text-gray-400">Made with <i className="fas fa-heart text-red-400 text-[10px] mx-0.5"></i> by 量化实验室</span></div>
         </div>
       </div>
     </footer>
@@ -36,3 +36,4 @@
 };
 
 export default Footer;
+

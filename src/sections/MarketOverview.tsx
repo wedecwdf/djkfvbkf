@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { TrendingUp, TrendingDown, Activity, BarChart3 } from 'lucide-react'
 
@@ -12,10 +12,10 @@ interface IndexData {
 }
 
 const initialIndices: IndexData[] = [
-  { name: '上证指数', code: '000001', price: 3052.35, change: 68.92, changePercent: 2.31, volume: '3852亿' },
-  { name: '深证成指', code: '399001', price: 9856.78, change: 156.34, changePercent: 1.61, volume: '4521亿' },
-  { name: '创业板指', code: '399006', price: 1956.23, change: 28.56, changePercent: 1.48, volume: '1856亿' },
-  { name: '科创50', code: '000688', price: 892.45, change: 15.78, changePercent: 1.80, volume: '623亿' },
+  { name: '涓婅瘉鎸囨暟', code: '000001', price: 3052.35, change: 68.92, changePercent: 2.31, volume: '3852浜? },
+  { name: '娣辫瘉鎴愭寚', code: '399001', price: 9856.78, change: 156.34, changePercent: 1.61, volume: '4521浜? },
+  { name: '鍒涗笟鏉挎寚', code: '399006', price: 1956.23, change: 28.56, changePercent: 1.48, volume: '1856浜? },
+  { name: '绉戝垱50', code: '000688', price: 892.45, change: 15.78, changePercent: 1.80, volume: '623浜? },
 ]
 
 export default function MarketOverview() {
@@ -25,7 +25,7 @@ export default function MarketOverview() {
   useEffect(() => {
     setLastUpdate(new Date().toLocaleString('zh-CN'))
     
-    // 模拟实时数据更新
+    // 妯℃嫙瀹炴椂鏁版嵁鏇存柊
     const interval = setInterval(() => {
       setIndices(prev => prev.map(index => {
         const randomChange = (Math.random() - 0.5) * 2
@@ -48,12 +48,12 @@ export default function MarketOverview() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-3xl font-bold mb-2">A股行情概览</h2>
-            <p className="text-muted-foreground">实时追踪主要指数动态</p>
+            <h2 className="text-3xl font-bold mb-2">A鑲¤鎯呮瑙?/h2>
+            <p className="text-muted-foreground">瀹炴椂杩借釜涓昏鎸囨暟鍔ㄦ€?/p>
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Activity className="w-4 h-4 animate-pulse" />
-            <span>最后更新: {lastUpdate}</span>
+            <span>鏈€鍚庢洿鏂? {lastUpdate}</span>
           </div>
         </div>
 
@@ -91,7 +91,7 @@ export default function MarketOverview() {
                       {index.changePercent >= 0 ? '+' : ''}{index.changePercent.toFixed(2)}%
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      成交额: {index.volume}
+                      鎴愪氦棰? {index.volume}
                     </span>
                   </div>
                   {/* Mini Chart */}
@@ -122,7 +122,7 @@ export default function MarketOverview() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm opacity-80">上涨家数</p>
+                  <p className="text-sm opacity-80">涓婃定瀹舵暟</p>
                   <p className="text-3xl font-bold">3,256</p>
                 </div>
                 <TrendingUp className="w-10 h-10 opacity-50" />
@@ -134,7 +134,7 @@ export default function MarketOverview() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm opacity-80">下跌家数</p>
+                  <p className="text-sm opacity-80">涓嬭穼瀹舵暟</p>
                   <p className="text-3xl font-bold">1,523</p>
                 </div>
                 <TrendingDown className="w-10 h-10 opacity-50" />
@@ -146,8 +146,8 @@ export default function MarketOverview() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">今日成交额</p>
-                  <p className="text-3xl font-bold text-foreground">8,456亿</p>
+                  <p className="text-sm text-muted-foreground">浠婃棩鎴愪氦棰?/p>
+                  <p className="text-3xl font-bold text-foreground">8,456浜?/p>
                 </div>
                 <BarChart3 className="w-10 h-10 text-muted-foreground" />
               </div>
@@ -158,3 +158,4 @@ export default function MarketOverview() {
     </section>
   )
 }
+

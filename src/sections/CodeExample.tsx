@@ -76,3 +76,4 @@ class MACDStrategy:
 };
 
 export default CodeExample;
+

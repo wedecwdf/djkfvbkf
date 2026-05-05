@@ -18,3 +18,4 @@ root.render(
 import('./lib/supabaseClient').then(() => {
   console.debug('Supabase client ready')
 })
+
