@@ -16,21 +16,33 @@ function HomePage() {
   return (
     <>
       <Navbar />
-      <div className="max-w-[1400px] mx-auto flex gap-0 px-4">
-        {/* 左侧留白 - lg 断点起显示 */}
-        <aside className="hidden lg:block w-[8%] flex-shrink-0"></aside>
-        {/* 中间核心内容 */}
-        <main className="flex-1 min-w-0 lg:w-[64%] px-2">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* 移动端：单栏 + 底部文章区 */}
+        <div className="block md:hidden">
           <Hero />
           <Services />
           <Workflow />
           <CodeExample />
           <ContactCTA />
-        </main>
-        {/* 右侧边栏 - lg 断点起显示 */}
-        <aside className="hidden lg:block w-[22%] flex-shrink-0 pl-4">
-          <RightSidebar />
-        </aside>
+          <div className="mt-8">
+            <RightSidebar />
+          </div>
+        </div>
+
+        {/* 平板及以上：三栏布局 */}
+        <div className="hidden md:flex gap-6">
+          <aside className="hidden lg:block w-[8%] flex-shrink-0"></aside>
+          <main className="flex-1 lg:w-[64%]">
+            <Hero />
+            <Services />
+            <Workflow />
+            <CodeExample />
+            <ContactCTA />
+          </main>
+          <aside className="w-[28%] lg:w-[22%] flex-shrink-0">
+            <RightSidebar />
+          </aside>
+        </div>
       </div>
       <Footer />
     </>
