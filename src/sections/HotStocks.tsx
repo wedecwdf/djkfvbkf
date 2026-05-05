@@ -1,4 +1,4 @@
-﻿// HotStocks缁勪欢 - 鐑棬鑲＄エ灞曠ず
+// HotStocks组件 - 热门股票展示
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -16,26 +16,26 @@ interface Stock {
 }
 
 const hotStocks: Stock[] = [
-  { code: '600519', name: '璐靛窞鑼呭彴', price: 1685.00, change: 25.50, changePercent: 1.54, volume: '2.5涓?, turnover: '42.1浜?, tags: ['鐧介厭', '钃濈'] },
-  { code: '000858', name: '浜旂伯娑?, price: 145.80, change: 3.20, changePercent: 2.24, volume: '15.6涓?, turnover: '22.7浜?, tags: ['鐧介厭', '娑堣垂'] },
-  { code: '002594', name: '姣斾簹杩?, price: 268.50, change: 8.30, changePercent: 3.19, volume: '28.3涓?, turnover: '75.9浜?, tags: ['鏂拌兘婧?, '姹借溅'] },
-  { code: '300750', name: '瀹佸痉鏃朵唬', price: 198.60, change: 5.40, changePercent: 2.80, volume: '18.9涓?, turnover: '37.5浜?, tags: ['閿傜數姹?, '鏂拌兘婧?] },
-  { code: '600036', name: '鎷涘晢閾惰', price: 32.85, change: 0.45, changePercent: 1.39, volume: '45.2涓?, turnover: '14.8浜?, tags: ['閾惰', '閲戣瀺'] },
-  { code: '000001', name: '骞冲畨閾惰', price: 10.28, change: 0.18, changePercent: 1.78, volume: '125.6涓?, turnover: '12.9浜?, tags: ['閾惰', '閲戣瀺'] },
+  { code: '600519', name: '贵州茅台', price: 1685.00, change: 25.50, changePercent: 1.54, volume: '2.5万', turnover: '42.1亿', tags: ['白酒', '蓝筹'] },
+  { code: '000858', name: '五粮液', price: 145.80, change: 3.20, changePercent: 2.24, volume: '15.6万', turnover: '22.7亿', tags: ['白酒', '消费'] },
+  { code: '002594', name: '比亚迪', price: 268.50, change: 8.30, changePercent: 3.19, volume: '28.3万', turnover: '75.9亿', tags: ['新能源', '汽车'] },
+  { code: '300750', name: '宁德时代', price: 198.60, change: 5.40, changePercent: 2.80, volume: '18.9万', turnover: '37.5亿', tags: ['锂电池', '新能源'] },
+  { code: '600036', name: '招商银行', price: 32.85, change: 0.45, changePercent: 1.39, volume: '45.2万', turnover: '14.8亿', tags: ['银行', '金融'] },
+  { code: '000001', name: '平安银行', price: 10.28, change: 0.18, changePercent: 1.78, volume: '125.6万', turnover: '12.9亿', tags: ['银行', '金融'] },
 ]
 
 const limitUpStocks: Stock[] = [
-  { code: '600888', name: '鏂扮枂浼楀拰', price: 8.56, change: 0.78, changePercent: 10.03, volume: '45.2涓?, turnover: '3.9浜?, tags: ['鏈夎壊', '娑ㄥ仠'] },
-  { code: '002456', name: '娆ц彶鍏?, price: 12.38, change: 1.13, changePercent: 10.04, volume: '156.8涓?, turnover: '19.4浜?, tags: ['娑堣垂鐢靛瓙', '娑ㄥ仠'] },
-  { code: '600118', name: '涓浗鍗槦', price: 28.65, change: 2.61, changePercent: 10.02, volume: '28.5涓?, turnover: '8.2浜?, tags: ['鑸ぉ', '娑ㄥ仠'] },
-  { code: '000938', name: '涓姱鍥介檯', price: 56.80, change: 5.17, changePercent: 10.01, volume: '68.9涓?, turnover: '39.1浜?, tags: ['鑺墖', '娑ㄥ仠'] },
+  { code: '600888', name: '新疆众和', price: 8.56, change: 0.78, changePercent: 10.03, volume: '45.2万', turnover: '3.9亿', tags: ['有色', '涨停'] },
+  { code: '002456', name: '欧菲光', price: 12.38, change: 1.13, changePercent: 10.04, volume: '156.8万', turnover: '19.4亿', tags: ['消费电子', '涨停'] },
+  { code: '600118', name: '中国卫星', price: 28.65, change: 2.61, changePercent: 10.02, volume: '28.5万', turnover: '8.2亿', tags: ['航天', '涨停'] },
+  { code: '000938', name: '中芯国际', price: 56.80, change: 5.17, changePercent: 10.01, volume: '68.9万', turnover: '39.1亿', tags: ['芯片', '涨停'] },
 ]
 
 const volumeLeaders: Stock[] = [
-  { code: '601318', name: '涓浗骞冲畨', price: 42.35, change: 0.85, changePercent: 2.05, volume: '289.5涓?, turnover: '122.6浜?, tags: ['淇濋櫓', '閲戣瀺'] },
-  { code: '600519', name: '璐靛窞鑼呭彴', price: 1685.00, change: 25.50, changePercent: 1.54, volume: '2.5涓?, turnover: '42.1浜?, tags: ['鐧介厭', '钃濈'] },
-  { code: '000858', name: '浜旂伯娑?, price: 145.80, change: 3.20, changePercent: 2.24, volume: '15.6涓?, turnover: '22.7浜?, tags: ['鐧介厭', '娑堣垂'] },
-  { code: '002594', name: '姣斾簹杩?, price: 268.50, change: 8.30, changePercent: 3.19, volume: '28.3涓?, turnover: '75.9浜?, tags: ['鏂拌兘婧?, '姹借溅'] },
+  { code: '601318', name: '中国平安', price: 42.35, change: 0.85, changePercent: 2.05, volume: '289.5万', turnover: '122.6亿', tags: ['保险', '金融'] },
+  { code: '600519', name: '贵州茅台', price: 1685.00, change: 25.50, changePercent: 1.54, volume: '2.5万', turnover: '42.1亿', tags: ['白酒', '蓝筹'] },
+  { code: '000858', name: '五粮液', price: 145.80, change: 3.20, changePercent: 2.24, volume: '15.6万', turnover: '22.7亿', tags: ['白酒', '消费'] },
+  { code: '002594', name: '比亚迪', price: 268.50, change: 8.30, changePercent: 3.19, volume: '28.3万', turnover: '75.9亿', tags: ['新能源', '汽车'] },
 ]
 
 interface StockCardProps {
@@ -82,8 +82,8 @@ function StockCard({ stock, showTags = true }: StockCardProps) {
             </div>
           </div>
           <div className="text-right text-xs text-muted-foreground">
-            <div>鎴愪氦閲? {stock.volume}</div>
-            <div>鎴愪氦棰? {stock.turnover}</div>
+            <div>成交量: {stock.volume}</div>
+            <div>成交额: {stock.turnover}</div>
           </div>
         </div>
       </CardContent>
@@ -97,20 +97,20 @@ export default function HotStocks() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-3xl font-bold mb-2">鐑棬鑲＄エ</h2>
-            <p className="text-muted-foreground">杩借釜甯傚満鐑偣锛屾妸鎻℃姇璧勬満浼?/p>
+            <h2 className="text-3xl font-bold mb-2">热门股票</h2>
+            <p className="text-muted-foreground">追踪市场热点，把握投资机会</p>
           </div>
           <div className="flex items-center gap-2">
             <Flame className="w-5 h-5 text-primary" />
-            <span className="text-sm text-muted-foreground">瀹炴椂鏇存柊</span>
+            <span className="text-sm text-muted-foreground">实时更新</span>
           </div>
         </div>
 
         <Tabs defaultValue="hot" className="w-full">
           <TabsList className="grid w-full max-w-md grid-cols-3 mb-8">
-            <TabsTrigger value="hot">鐑棬鍏虫敞</TabsTrigger>
-            <TabsTrigger value="limitup">娑ㄥ仠姒?/TabsTrigger>
-            <TabsTrigger value="volume">鎴愪氦棰濇</TabsTrigger>
+            <TabsTrigger value="hot">热门关注</TabsTrigger>
+            <TabsTrigger value="limitup">涨停榜</TabsTrigger>
+            <TabsTrigger value="volume">成交额榜</TabsTrigger>
           </TabsList>
 
           <TabsContent value="hot">
@@ -142,15 +142,14 @@ export default function HotStocks() {
         <div className="mt-8 flex flex-wrap gap-4 justify-center">
           <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-lg">
             <Eye className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">鐐瑰嚮鑲＄エ鏌ョ湅璇︽儏</span>
+            <span className="text-sm text-muted-foreground">点击股票查看详情</span>
           </div>
           <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-lg">
             <Star className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">鏀惰棌鍏虫敞鑲＄エ</span>
+            <span className="text-sm text-muted-foreground">收藏关注股票</span>
           </div>
         </div>
       </div>
     </section>
   )
 }
-

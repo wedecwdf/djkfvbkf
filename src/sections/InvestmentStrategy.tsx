@@ -1,4 +1,4 @@
-﻿import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { 
@@ -25,50 +25,50 @@ interface Strategy {
 const strategies: Strategy[] = [
   {
     id: '1',
-    title: '浠峰€兼姇璧勭瓥鐣?,
-    description: '瀵绘壘琚綆浼扮殑浼樿川浼佷笟锛岄暱鏈熸寔鏈夛紝鍒嗕韩浼佷笟鎴愰暱绾㈠埄銆傞€傚悎鏈夎€愬績銆佽拷姹傜ǔ鍋ユ敹鐩婄殑鎶曡祫鑰呫€?,
+    title: '价值投资策略',
+    description: '寻找被低估的优质企业，长期持有，分享企业成长红利。适合有耐心、追求稳健收益的投资者。',
     riskLevel: 'low',
-    expectedReturn: '8%-15%/骞?,
-    timeHorizon: '3骞翠互涓?,
-    tags: ['宸磋彶鐗?, '闀挎湡鎸佹湁', '钃濈鑲?],
+    expectedReturn: '8%-15%/年',
+    timeHorizon: '3年以上',
+    tags: ['巴菲特', '长期持有', '蓝筹股'],
     steps: [
-      '绛涢€塕OE>15%鐨勪紭璐ㄤ紒涓?,
-      '鍒嗘瀽PE銆丳B浼板€兼按骞?,
-      '鐮旂┒琛屼笟绔炰簤鏍煎眬',
-      '鍒嗘暎鎶曡祫5-10鍙偂绁?,
-      '瀹氭湡澶嶇洏锛岄暱鏈熸寔鏈?
+      '筛选ROE>15%的优质企业',
+      '分析PE、PB估值水平',
+      '研究行业竞争格局',
+      '分散投资5-10只股票',
+      '定期复盘，长期持有'
     ]
   },
   {
     id: '2',
-    title: '瓒嬪娍璺熻釜绛栫暐',
-    description: '椤哄簲甯傚満瓒嬪娍锛屼拱娑ㄥ崠璺岋紝鍒╃敤鎶€鏈垎鏋愭妸鎻′拱鍗栨椂鏈恒€傞€傚悎鏈変竴瀹氱粡楠岀殑鎶曡祫鑰呫€?,
+    title: '趋势跟踪策略',
+    description: '顺应市场趋势，买涨卖跌，利用技术分析把握买卖时机。适合有一定经验的投资者。',
     riskLevel: 'medium',
-    expectedReturn: '15%-30%/骞?,
-    timeHorizon: '1-6涓湀',
-    tags: ['鎶€鏈垎鏋?, '鍧囩嚎', 'MACD'],
+    expectedReturn: '15%-30%/年',
+    timeHorizon: '1-6个月',
+    tags: ['技术分析', '均线', 'MACD'],
     steps: [
-      '璇嗗埆鑲＄エ涓昏瓒嬪娍',
-      '浣跨敤鍧囩嚎鍒ゆ柇涔板崠鐐?,
-      '璁剧疆姝㈡崯姝㈢泩浣?,
-      '鎺у埗鍗曠瑪浠撲綅',
-      '涓ユ牸鎵ц浜ゆ槗绾緥'
+      '识别股票主要趋势',
+      '使用均线判断买卖点',
+      '设置止损止盈位',
+      '控制单笔仓位',
+      '严格执行交易纪律'
     ]
   },
   {
     id: '3',
-    title: '鎴愰暱鑲℃姇璧勭瓥鐣?,
-    description: '鎶曡祫楂樻垚闀挎€х殑鏂板叴琛屼笟锛岃拷姹傝秴棰濇敹鐩娿€傞€傚悎椋庨櫓鎵垮彈鑳藉姏杈冨己鐨勬姇璧勮€呫€?,
+    title: '成长股投资策略',
+    description: '投资高成长性的新兴行业，追求超额收益。适合风险承受能力较强的投资者。',
     riskLevel: 'high',
-    expectedReturn: '20%-50%/骞?,
-    timeHorizon: '1-3骞?,
-    tags: ['鏂拌兘婧?, '绉戞妧', '鍒涙柊鑽?],
+    expectedReturn: '20%-50%/年',
+    timeHorizon: '1-3年',
+    tags: ['新能源', '科技', '创新药'],
     steps: [
-      '鐮旂┒鏂板叴琛屼笟瓒嬪娍',
-      '绛涢€夎惀鏀跺閫?30%鐨勫叕鍙?,
-      '鍒嗘瀽鏍稿績绔炰簤浼樺娍',
-      '鍏虫敞鐮斿彂鎶曞叆鍗犳瘮',
-      '鍔ㄦ€佽皟鏁存寔浠撴瘮渚?
+      '研究新兴行业趋势',
+      '筛选营收增速>30%的公司',
+      '分析核心竞争优势',
+      '关注研发投入占比',
+      '动态调整持仓比例'
     ]
   }
 ]
@@ -80,9 +80,9 @@ const riskColors = {
 }
 
 const riskLabels = {
-  low: '浣庨闄?,
-  medium: '涓闄?,
-  high: '楂橀闄?
+  low: '低风险',
+  medium: '中风险',
+  high: '高风险'
 }
 
 interface LearningResource {
@@ -94,22 +94,22 @@ interface LearningResource {
 
 const resources: LearningResource[] = [
   {
-    title: '鑲＄エ鎶曡祫鍏ラ棬鎸囧崡',
+    title: '股票投资入门指南',
     type: 'course',
-    description: '浠庨浂寮€濮嬪涔犺偂绁ㄦ姇璧勫熀纭€鐭ヨ瘑',
-    duration: '10鑺傝'
+    description: '从零开始学习股票投资基础知识',
+    duration: '10节课'
   },
   {
-    title: '璐㈠姟鎶ヨ〃鍒嗘瀽瀹炴垬',
+    title: '财务报表分析实战',
     type: 'video',
-    description: '鎵嬫妸鎵嬫暀浣犺鎳備笂甯傚叕鍙歌储鎶?,
-    duration: '2灏忔椂'
+    description: '手把手教你读懂上市公司财报',
+    duration: '2小时'
   },
   {
-    title: '鎶€鏈寚鏍囧畬鍏ㄦ墜鍐?,
+    title: '技术指标完全手册',
     type: 'article',
-    description: 'MACD銆並DJ銆丷SI绛夋寚鏍囪瑙?,
-    duration: '30鍒嗛挓闃呰'
+    description: 'MACD、KDJ、RSI等指标详解',
+    duration: '30分钟阅读'
   }
 ]
 
@@ -136,17 +136,17 @@ function StrategyCard({ strategy }: { strategy: Strategy }) {
         
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-muted rounded-lg p-3">
-            <div className="text-xs text-muted-foreground mb-1">棰勬湡鏀剁泭</div>
+            <div className="text-xs text-muted-foreground mb-1">预期收益</div>
             <div className="font-semibold text-primary">{strategy.expectedReturn}</div>
           </div>
           <div className="bg-muted rounded-lg p-3">
-            <div className="text-xs text-muted-foreground mb-1">鎶曡祫鍛ㄦ湡</div>
+            <div className="text-xs text-muted-foreground mb-1">投资周期</div>
             <div className="font-semibold">{strategy.timeHorizon}</div>
           </div>
         </div>
 
         <div className="space-y-2 flex-1">
-          <div className="text-sm font-medium mb-2">鎿嶄綔姝ラ:</div>
+          <div className="text-sm font-medium mb-2">操作步骤:</div>
           {strategy.steps.map((step, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
@@ -156,7 +156,7 @@ function StrategyCard({ strategy }: { strategy: Strategy }) {
         </div>
 
         <Button className="w-full mt-6" variant="outline">
-          浜嗚В璇︽儏
+          了解详情
           <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </CardContent>
@@ -169,9 +169,10 @@ export default function InvestmentStrategy() {
     <section id="strategy" className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">鎶曡祫绛栫暐</h2>
+          <h2 className="text-3xl font-bold mb-4">投资策略</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            鏍规嵁鎮ㄧ殑椋庨櫓鍋忓ソ鍜屾姇璧勭洰鏍囷紝閫夋嫨閫傚悎鐨勬姇璧勭瓥鐣ャ€傝浣忥細鎶曡祫鏈夐闄╋紝鍏ュ競闇€璋ㄦ厧銆?          </p>
+            根据您的风险偏好和投资目标，选择适合的投资策略。记住：投资有风险，入市需谨慎。
+          </p>
         </div>
 
         {/* Risk Assessment */}
@@ -183,12 +184,13 @@ export default function InvestmentStrategy() {
                   <Shield className="w-8 h-8 text-primary-foreground" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">椋庨櫓璇勪及娴嬭瘯</h3>
-                  <p className="text-muted-foreground">3鍒嗛挓浜嗚В鎮ㄧ殑椋庨櫓鎵垮彈鑳藉姏</p>
+                  <h3 className="text-xl font-bold">风险评估测试</h3>
+                  <p className="text-muted-foreground">3分钟了解您的风险承受能力</p>
                 </div>
               </div>
               <Button size="lg" className="bg-primary hover:bg-primary/90">
-                寮€濮嬫祴璇?                <ArrowRight className="w-4 h-4 ml-2" />
+                开始测试
+                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
           </CardContent>
@@ -205,7 +207,7 @@ export default function InvestmentStrategy() {
         <div className="bg-muted/50 rounded-xl p-8">
           <div className="flex items-center gap-3 mb-6">
             <BookOpen className="w-6 h-6 text-primary" />
-            <h3 className="text-xl font-bold">瀛︿範璧勬簮</h3>
+            <h3 className="text-xl font-bold">学习资源</h3>
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
@@ -223,9 +225,9 @@ export default function InvestmentStrategy() {
                       <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>
                       <div className="flex items-center gap-2">
                         <Badge variant="secondary" className="text-xs">
-                          {resource.type === 'video' && '瑙嗛'}
-                          {resource.type === 'article' && '鏂囩珷'}
-                          {resource.type === 'course' && '璇剧▼'}
+                          {resource.type === 'video' && '视频'}
+                          {resource.type === 'article' && '文章'}
+                          {resource.type === 'course' && '课程'}
                         </Badge>
                         <span className="text-xs text-muted-foreground">{resource.duration}</span>
                       </div>
@@ -241,11 +243,12 @@ export default function InvestmentStrategy() {
         <div className="mt-8 flex items-start gap-3 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
           <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
           <div className="text-sm text-yellow-800">
-            <strong>椋庨櫓鎻愮ず锛?/strong>
-            鑲＄エ鎶曡祫瀛樺湪椋庨櫓锛岃繃寰€涓氱哗涓嶄唬琛ㄦ湭鏉ヨ〃鐜般€傛湰鏂囧唴瀹逛粎渚涘弬鑰冿紝涓嶆瀯鎴愭姇璧勫缓璁€?            鎶曡祫鑰呭簲鏍规嵁鑷韩鎯呭喌鐙珛鍒ゆ柇锛岃嚜琛屾壙鎷呮姇璧勯闄┿€?          </div>
+            <strong>风险提示：</strong>
+            股票投资存在风险，过往业绩不代表未来表现。本文内容仅供参考，不构成投资建议。
+            投资者应根据自身情况独立判断，自行承担投资风险。
+          </div>
         </div>
       </div>
     </section>
   )
 }
-
