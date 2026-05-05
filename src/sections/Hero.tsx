@@ -36,7 +36,7 @@ const Hero = () => {
 
   return (
     <section id="hero" className="pt-8 pb-6 px-6 max-w-7xl mx-auto">
-      <div className="grid lg:grid-cols-2 gap-8 items-center">
+      <div className="grid lg:grid-cols-2 gap-8 items-start">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-red-50 to-amber-50 rounded-full mb-4 border border-red-200">
             <span className="relative flex h-3 w-3">
@@ -115,3 +115,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

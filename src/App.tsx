@@ -29,7 +29,7 @@ function HomePage() {
           <ContactCTA />
         </main>
         {/* 右侧边栏 - lg 断点起显示 */}
-        <aside className="hidden lg:block w-[22%] flex-shrink-0 pl-4">
+        <aside className="hidden lg:block w-[22%] flex-shrink-0 pl-4 pt-8">
           <RightSidebar />
         </aside>
       </div>
@@ -60,3 +60,4 @@ function App() {
 }
 
 export default App;
+
