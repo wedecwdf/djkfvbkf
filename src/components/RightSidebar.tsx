@@ -37,7 +37,7 @@ export default function RightSidebar() {
       <div className="bg-white rounded-2xl border border-gray-200/80 shadow-sm p-5">
         <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-100">
           <span className="w-6 h-6 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-xs">
-            <i className="fas fa-bolt"></i>
+            ⚡
           </span>
           <span className="text-base font-bold text-gray-800">最新文章</span>
         </div>
@@ -75,4 +75,5 @@ export default function RightSidebar() {
     </div>
   );
 }
+
 
