@@ -10,18 +10,28 @@ import Profile from "./sections/Profile";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
-import LatestArticles from "./components/LatestArticles";
+import RightSidebar from "./components/RightSidebar";
 
 function HomePage() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <Services />
-      <LatestArticles />
-      <Workflow />
-      <CodeExample />
-      <ContactCTA />
+      <div className="max-w-[1400px] mx-auto flex gap-0 px-4">
+        {/* 左侧留白 */}
+        <aside className="hidden xl:block w-[12%] flex-shrink-0"></aside>
+        {/* 中间核心内容 */}
+        <main className="flex-1 min-w-0 xl:w-[60%] px-2">
+          <Hero />
+          <Services />
+          <Workflow />
+          <CodeExample />
+          <ContactCTA />
+        </main>
+        {/* 右侧边栏 */}
+        <aside className="hidden xl:block w-[22%] flex-shrink-0 pl-4">
+          <RightSidebar />
+        </aside>
+      </div>
       <Footer />
     </>
   );
